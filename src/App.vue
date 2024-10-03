@@ -1,13 +1,19 @@
 <!-- src/App.vue -->
 <script setup>
 import { RouterView } from 'vue-router';
-import Sidebar from './components/Sidebar.vue';
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+import StaffSidebar from './components/StaffSidebar.vue';
+
+const store = useStore();
+const role = computed(() => store.getters['auth/role']); // Retrieve user role from Vuex
+
 </script>
 
 <template>
   <div class="app-container d-flex">
     <!-- Sidebar -->
-    <Sidebar />
+    <StaffSidebar v-if="role === 'staff'" />
 
     <!-- Router View -->
     <div class="content-container">

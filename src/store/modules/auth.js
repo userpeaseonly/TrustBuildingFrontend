@@ -39,7 +39,6 @@ export default {
       async verifyOtp({ commit }, otp) {
         try {
           const response = await apiClient.post('/otp/verify/', { otp_key: otp });
-          console.log(response.data);
           const { access, refresh } = response.data;
           commit('SET_TOKEN', { token: access, refreshToken: refresh });
           await dispatch('fetchUserRole');

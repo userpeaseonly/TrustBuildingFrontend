@@ -2,7 +2,7 @@
 <template>
   <div class="d-flex">
     <!-- Sidebar -->
-    <Sidebar />
+    <StaffSidebar />
 
     <!-- Content -->
     <div class="content-container">
@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import Sidebar from '../components/Sidebar.vue';
+import StaffSidebar from '../components/StaffSidebar.vue';
 
 export default {
   components: {
-    Sidebar,
+    StaffSidebar,
   },
 };
 </script>

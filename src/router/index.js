@@ -6,6 +6,8 @@ import Login from '../views/Login.vue';
 import Company from '../views/Company.vue';  // Add Company view
 import Staff from '../views/Staff.vue';  // Add Staff view
 import Customer from '../views/Customer.vue';  // Add Customer view
+import Buildings from '../views/Staff/Buildings.vue';  // Add StaffBuildings view
+import BuildingDetails from '../views/Staff/BuildingDetails.vue';  // Add BuildingDetails view
 
 const routes = [
   {
@@ -36,6 +38,18 @@ const routes = [
     name: 'customer',
     component: Customer,
     meta: { requiresAuth: true, role: 'customer' },  // Protect customer route
+  },
+  {
+    path: '/staff/buildings',
+    name: 'StaffBuildings',
+    component: Buildings,
+    meta: { requiresAuth: true, role: 'staff' }, // Ensure only authenticated users can access
+  },
+  {
+    path: '/building/:building_id/apartments',
+    name: 'BuildingDetails',
+    component: BuildingDetails,
+    meta: { requiresAuth: true }, // Add authentication guard if needed
   },
 ];
 
