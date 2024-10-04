@@ -8,6 +8,7 @@ import Staff from '../views/Staff.vue';  // Add Staff view
 import Customer from '../views/Customer.vue';  // Add Customer view
 import Buildings from '../views/Staff/Buildings.vue';  // Add StaffBuildings view
 import BuildingDetails from '../views/Staff/BuildingDetails.vue';  // Add BuildingDetails view
+import Customers from '../views/Staff/Customers.vue';  // Add Customers view
 
 const routes = [
   {
@@ -50,6 +51,12 @@ const routes = [
     name: 'BuildingDetails',
     component: BuildingDetails,
     meta: { requiresAuth: true }, // Add authentication guard if needed
+  },
+  {
+    path: '/staff/customers',
+    name: 'Customers',
+    component: Customers,
+    meta: { requiresAuth: true, role: 'staff' }, // Ensure only authenticated users can access
   },
 ];
 

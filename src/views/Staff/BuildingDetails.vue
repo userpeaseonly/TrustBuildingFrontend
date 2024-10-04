@@ -54,9 +54,6 @@
         <!-- Apartments List Header -->
         <h4 class="mb-4">Apartments</h4>
 
-        <!-- Add New Apartment Form -->
-        <AddApartmentForm :buildingId="building.id" @apartmentAdded="fetchApartments" />
-
         <!-- Loading Apartments -->
         <div v-if="loadingApartments" class="d-flex justify-content-center align-items-center" style="height: 150px;">
         <div class="spinner-border" role="status">
