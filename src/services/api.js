@@ -4,10 +4,7 @@ import store from '../store';
 import router from '../router';
 
 const apiClient = axios.create({
-  baseURL: 'http://0.0.0.0:8020/api',  // Change to your backend URL
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: 'http://0.0.0.0:8020/api',
 });
 
 // Attach token to requests
