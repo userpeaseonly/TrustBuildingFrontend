@@ -9,6 +9,8 @@ import Customer from '../views/Customer.vue';  // Add Customer view
 import Buildings from '../views/Staff/Buildings.vue';  // Add StaffBuildings view
 import BuildingDetails from '../views/Staff/BuildingDetails.vue';  // Add BuildingDetails view
 import Customers from '../views/Staff/Customers.vue';  // Add Customers view
+import Contracts from '../views/Staff/Contracts.vue';  // Add Contracts view
+import ContractDetails from '../views/Staff/ContractDetails.vue';  // Add ContractDetails view
 
 const routes = [
   {
@@ -57,6 +59,18 @@ const routes = [
     name: 'Customers',
     component: Customers,
     meta: { requiresAuth: true, role: 'staff' }, // Ensure only authenticated users can access
+  },
+  {
+    path: '/staff/contracts',
+    name: 'Contracts',
+    component: Contracts,
+    meta: { requiresAuth: true, role: 'staff' }, // Ensure only authenticated users can access
+  },
+  {
+    path: '/staff/contracts/:contract_id',
+    name: 'ContractDetails',
+    component: ContractDetails,
+    props: true,
   },
 ];
 
