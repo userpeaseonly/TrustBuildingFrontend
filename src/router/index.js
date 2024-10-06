@@ -11,6 +11,7 @@ import BuildingDetails from '../views/Staff/BuildingDetails.vue';  // Add Buildi
 import Customers from '../views/Staff/Customers.vue';  // Add Customers view
 import Contracts from '../views/Staff/Contracts.vue';  // Add Contracts view
 import ContractDetails from '../views/Staff/ContractDetails.vue';  // Add ContractDetails view
+import CreateContract from '../views/Staff/CreateContract.vue';  // Add CreateContract view
 
 const routes = [
   {
@@ -72,6 +73,12 @@ const routes = [
     component: ContractDetails,
     props: true,
   },
+  {
+    path: '/staff/contracts/create',
+    name: 'CreateContract',
+    component: CreateContract,
+    meta: { requiresAuth: true, role: 'staff' }, // Ensure only authenticated users can access
+  }
 ];
 
 const router = createRouter({
