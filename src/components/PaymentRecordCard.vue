@@ -23,6 +23,20 @@
                 </ul>
             </div>
 
+            <!-- Return Payments under each record -->
+            <div v-if="record.return_payments.length > 0">
+                <h6 class="mt-3">Returned Payments:</h6>
+                <ul class="list-group">
+                    <li v-for="payment in record.return_payments" :key="payment.id" class="list-group-item">
+                        <p class="mb-1"><strong>Date:</strong> {{ payment.return_date }}</p>
+                        <p class="mb-1"><strong>Amount:</strong> {{ formatPrice(payment.return_amount) }} UZS</p>
+                        <p class="mb-1"><strong>Method:</strong> {{ payment.return_method }}</p>
+                        <p class="mb-1"><strong>Reference:</strong> {{ payment.return_reference }}</p>
+                    </li>
+                </ul>
+            </div>
+
+
             <!-- Make Payment Button -->
             <button @click="openMakePaymentModal(record)" class="btn btn-primary mt-3">Make Payment</button>
         </div>

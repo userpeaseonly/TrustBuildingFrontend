@@ -41,6 +41,15 @@
                                 {{ errors.payment_reference[0] }}
                             </div>
                         </div>
+<!-- 
+                        <div class="mb-3">
+                            <label for="paymentNotes" class="form-label">Payment Note</label>
+                            <input v-model="paymentData.payment_notes" type="text" id="paymentNotes"
+                                class="form-control" :class="{ 'is-invalid': errors?.payment_notes }" />
+                            <div v-if="errors?.payment_notes" class="invalid-feedback">
+                                {{ errors.payment_notes[0] }}
+                            </div>
+                        </div> -->
 
                         <div class="mb-3">
                             <label for="paymentDate" class="form-label">Payment Date</label>
@@ -93,6 +102,7 @@ const paymentData = ref({
     payment_amount: '',
     payment_method: 'CASH',
     payment_reference: '',
+    // payment_notes: '',
     payment_record: props.paymentRecord.id,
 });
 
