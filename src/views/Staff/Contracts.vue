@@ -6,6 +6,10 @@
     <!-- Main Content Area -->
     <div class="container mt-5" style="flex: 1;">
     <h2 class="mb-4 text-center">Manage Contracts</h2>
+    
+    <div>
+        <RouterLink to="/staff/contracts/create" class="btn btn-primary mb-3">Create Contract</RouterLink>
+    </div>
 
     <div v-if="loadingContracts" class="text-center my-5">
         <div class="spinner-border" role="status">

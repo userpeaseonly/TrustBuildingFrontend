@@ -137,6 +137,7 @@ if (lastPaymentIncluded.value) {
 try {
     await apiClient.post('/contracts/staff/contracts/create/', data);
     alert('Contract created successfully');
+    window.location.href = '/staff/contracts';
 } catch (error) {
     alert(`Failed to create contract\n${error.response.data.non_field_errors || ''}`);
 }
