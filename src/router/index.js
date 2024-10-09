@@ -12,6 +12,10 @@ import Customers from '../views/Staff/Customers.vue';  // Add Customers view
 import Contracts from '../views/Staff/Contracts.vue';  // Add Contracts view
 import ContractDetails from '../views/Staff/ContractDetails.vue';  // Add ContractDetails view
 import CreateContract from '../views/Staff/CreateContract.vue';  // Add CreateContract view
+import CompanyBuildings from '../views/Company/Buildings.vue';  // Add CompanyBuildings view
+import CompanyStaff from '../views/Company/Staff.vue';  // Add CompanyStaff view
+import CompanyContracts from '../views/Company/Contracts.vue';  // Add CompanyContracts view
+import CompanyContractDetails from '../views/Company/ContractDetails.vue';  // Add CompanyContractDetails view
 
 const routes = [
   {
@@ -78,7 +82,31 @@ const routes = [
     name: 'CreateContract',
     component: CreateContract,
     meta: { requiresAuth: true, role: 'staff' }, // Ensure only authenticated users can access
-  }
+  },
+  {
+    path: '/company/buildings',
+    name: 'CompanyBuildings',
+    component: CompanyBuildings,
+    meta: { requiresAuth: true, role: 'company' }, // Ensure only authenticated users can access
+  },
+  {
+    path: '/company/staff',
+    name: 'CompanyStaff',
+    component: CompanyStaff,
+    meta: { requiresAuth: true, role: 'company' }, // Ensure only authenticated users can access
+  },
+  {
+    path: '/company/contracts',
+    name: 'CompanyContracts',
+    component: CompanyContracts,
+    meta: { requiresAuth: true, role: 'company' }, // Ensure only authenticated users can access
+  },
+  {
+    path: '/company/contracts/:contract_id',
+    name: 'CompanyContractDetails',
+    component: CompanyContractDetails,
+    props: true,
+  },
 ];
 
 const router = createRouter({

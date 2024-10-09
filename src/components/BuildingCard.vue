@@ -39,11 +39,11 @@
         </small>
     </div>
 
-    <div class="">
+    <!-- <div class="">
         <small class="text-muted">
         Last updated: {{ formatDate(building.updated_at) }}
         </small>
-    </div>
+    </div> -->
     <!-- Manage Building Button -->
     <RouterLink :to="`/building/${building.id}/apartments`" class="btn btn-primary mt-3">
         Manage Building
