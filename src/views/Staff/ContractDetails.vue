@@ -30,11 +30,15 @@
                 <LastPayment v-if="contract.lastpayment" :payment="contract.lastpayment" />
 
                 <!-- Payment Records -->
-                <PaymentRecords :records="contract.payment_records" @openPaymentModal="handleOpenPaymentModal" />
+                <PaymentRecords :records="contract.payment_records" @openPaymentModal="handleOpenPaymentModal" @openSavePaymentModal="handleSaveOpenPaymentModel" />
 
                 <!-- Make Payment Modal -->
                 <PaymentModal v-if="showPaymentModal" :paymentRecord="selectedPaymentRecord" @close="closePaymentModal"
                     @submit="submitPayment" :errors="backendErrors" />
+
+                <!-- Save Payment Modal -->
+                <SavePaymentModal v-if="showSavePaymentModal" :paymentRecord="selectedPaymentRecord" @close="closeSavePaymentModal"
+                    @submit="savePayment" :errors="backendErrors" />
             </div>
         </div>
     </div>
@@ -50,6 +54,7 @@ import DownPayment from '@/components/DownPayment.vue';
 import LastPayment from '@/components/LastPayment.vue';
 import PaymentRecords from '@/components/PaymentRecords.vue';
 import PaymentModal from '@/components/PaymentModal.vue';
+import SavePaymentModal from '@/components/SavePaymentModel.vue';
 import apiClient from '@/services/api'; // Import apiClient
 
 const route = useRoute();
@@ -59,6 +64,8 @@ const { contract, loadingContract, errorContract, fetchContractDetails } = useCo
 const showPaymentModal = ref(false);
 const selectedPaymentRecord = ref(null);
 const backendErrors = ref(null);  // Backend errors
+
+const showSavePaymentModal = ref(false);
 
 // Handle back navigation
 const goBack = () => {
@@ -72,17 +79,45 @@ const handleOpenPaymentModal = (paymentRecord) => {
     showPaymentModal.value = true;
 };
 
+const handleSaveOpenPaymentModel = (paymentRecord) => {
+    selectedPaymentRecord.value = paymentRecord;
+    backendErrors.value = null; // Reset errors when opening modal
+    showSavePaymentModal.value = true;
+};
+
 // Close payment modal
 const closePaymentModal = () => {
     showPaymentModal.value = false;
     backendErrors.value = null; // Clear errors
 };
 
+// Close save payment modal
+const closeSavePaymentModal = () => {
+    showSavePaymentModal.value = false;
+    backendErrors.value = null; // Clear errors
+};
+
+
 // Handle payment submission
 const submitPayment = async (paymentData) => {
     try {
         await apiClient.post('/contracts/contract/payment-record/make-payment/', paymentData);
         closePaymentModal();
+        fetchContractDetails(route.params.contract_id); // Refresh contract details after payment
+    } catch (error) {
+        // Capture backend errors and pass them to the modal
+        if (error.response && error.response.data) {
+            backendErrors.value = error.response.data;
+        } else {
+            backendErrors.value = { non_field_errors: ['An unexpected error occurred. Please try again.'] };
+        }
+    }
+};
+
+const savePayment = async (paymentData) => {
+    try {
+        await apiClient.post('/contracts/update-next-payment-record-customer-debt/', paymentData);
+        closeSavePaymentModal();
         fetchContractDetails(route.params.contract_id); // Refresh contract details after payment
     } catch (error) {
         // Capture backend errors and pass them to the modal
