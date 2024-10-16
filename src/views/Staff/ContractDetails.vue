@@ -26,11 +26,12 @@
                 <!-- Down Payment -->
                 <DownPayment v-if="contract.downpayment" :payment="contract.downpayment" />
 
+                <!-- Payment Records -->
+                <PaymentRecords :records="contract.payment_records" @openPaymentModal="handleOpenPaymentModal" @openSavePaymentModal="handleSaveOpenPaymentModel" />
+
                 <!-- Last Payment -->
                 <LastPayment v-if="contract.lastpayment" :payment="contract.lastpayment" />
 
-                <!-- Payment Records -->
-                <PaymentRecords :records="contract.payment_records" @openPaymentModal="handleOpenPaymentModal" @openSavePaymentModal="handleSaveOpenPaymentModel" />
 
                 <!-- Make Payment Modal -->
                 <PaymentModal v-if="showPaymentModal" :paymentRecord="selectedPaymentRecord" @close="closePaymentModal"

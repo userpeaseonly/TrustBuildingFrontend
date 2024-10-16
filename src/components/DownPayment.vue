@@ -2,14 +2,32 @@
     <div class="card mb-4 shadow-sm">
         <div class="card-body">
             <h5 class="card-title">Down Payment</h5>
-            <p class="card-text"><strong>Date:</strong> {{ payment.payment_date }}</p>
-            <p class="card-text"><strong>Amount:</strong> {{ formatPrice(payment.payment_amount) }} UZS</p>
-            <p class="card-text"><strong>Method:</strong> {{ payment.payment_method }}</p>
-            <p class="card-text"><strong>Reference:</strong> {{ payment.payment_reference }}</p>
-            <p class="card-text"><strong>Paid:</strong> {{ payment.payment_paid ? 'Yes' : 'No' }}</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Method</th>
+                        <th>Reference</th>
+                        <th>Payment Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ payment.payment_date }}</td>
+                        <td>{{ formatPrice(payment.payment_amount) }} UZS</td>
+                        <td>{{ payment.payment_method }}</td>
+                        <td>{{ payment.payment_reference }}</td>
+                        <td><span v-if="payment.payment_paid" class="badge bg-success">Paid</span><span v-else class="badge bg-danger">Unpaid</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </template>
+
+
+
 
 <script setup>
 const props = defineProps({

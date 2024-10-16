@@ -16,6 +16,8 @@ import CompanyBuildings from '../views/Company/Buildings.vue';  // Add CompanyBu
 import CompanyStaff from '../views/Company/Staff.vue';  // Add CompanyStaff view
 import CompanyContracts from '../views/Company/Contracts.vue';  // Add CompanyContracts view
 import CompanyContractDetails from '../views/Company/ContractDetails.vue';  // Add CompanyContractDetails view
+import CustomerPage from '../views/Customer.vue';  // Add Customer view
+import CustomerContracts from '../views/Customer/Contracts.vue';  // Add CustomerContracts view
 
 const routes = [
   {
@@ -107,6 +109,18 @@ const routes = [
     component: CompanyContractDetails,
     props: true,
   },
+  {
+    path: '/customer',
+    name: 'CustomerPage',
+    component: CustomerPage,
+    meta: { requiresAuth: true, role: 'customer' }, // Ensure only authenticated users can access
+  },
+  {
+    path: '/customer/contracts',
+    name: 'CustomerContracts',
+    component: CustomerContracts,
+    meta: { requiresAuth: true, role: 'customer' }, // Ensure only authenticated users can access
+  }
 ];
 
 const router = createRouter({
