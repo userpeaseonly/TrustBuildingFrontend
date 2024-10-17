@@ -5,6 +5,7 @@ import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Company from '../views/Company.vue';  // Add Company view
 import Staff from '../views/Staff.vue';  // Add Staff view
+import StaffCustomerPayments from '../views/Staff/Payments.vue';  // Add StaffCustomerPayments view
 import Customer from '../views/Customer.vue';  // Add Customer view
 import Buildings from '../views/Staff/Buildings.vue';  // Add StaffBuildings view
 import BuildingDetails from '../views/Staff/BuildingDetails.vue';  // Add BuildingDetails view
@@ -68,6 +69,12 @@ const routes = [
     meta: { requiresAuth: true, role: 'staff' }, // Ensure only authenticated users can access
   },
   {
+    path: '/staff/payments',
+    name: 'StaffCustomerPayments',
+    component: StaffCustomerPayments,
+    meta: { requiresAuth: true, role: 'staff' }, // Ensure only authenticated users can access
+  },
+  {
     path: '/staff/contracts',
     name: 'Contracts',
     component: Contracts,
@@ -120,7 +127,7 @@ const routes = [
     name: 'CustomerContracts',
     component: CustomerContracts,
     meta: { requiresAuth: true, role: 'customer' }, // Ensure only authenticated users can access
-  }
+  },
 ];
 
 const router = createRouter({
