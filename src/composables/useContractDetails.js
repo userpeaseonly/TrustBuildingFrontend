@@ -28,5 +28,16 @@ export default function useContractDetails() {
         }
     };
 
-    return { contract, loadingContract, errorContract, fetchContractDetails, fetchCompanyContractDetails };
+    const fetchCompanyTerminatedContractDetails = async (contractId) => {
+        try {
+            const response = await apiClient.get(`/contracts/staff/contracts/terminate/${contractId}`);
+            contract.value = response.data;
+        } catch (error) {
+            errorContract.value = 'Failed to fetch contract details.';
+        } finally {
+            loadingContract.value = false;
+        }
+    };
+
+    return { contract, loadingContract, errorContract, fetchContractDetails, fetchCompanyContractDetails, fetchCompanyTerminatedContractDetails };
 }
