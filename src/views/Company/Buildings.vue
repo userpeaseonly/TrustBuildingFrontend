@@ -1,16 +1,12 @@
+<!-- src/views/Company/Buildings.vue -->
 <template>
     <div class="d-flex">
         <!-- Sidebar -->
-        <StaffSidebar />
+        <CompanySidebar />
 
         <!-- Main content area -->
         <div class="content-container">
             <h2 class="mb-4">Manage Buildings</h2>
-
-            <!-- Button to open create building form -->
-            <button class="btn btn-primary mb-4" @click="openCreateBuildingModal">
-                Create New Building
-            </button>
 
             <!-- Loading Spinner -->
             <div v-if="loading" class="d-flex justify-content-center align-items-center" style="height: 200px;">
@@ -32,13 +28,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Create Building Modal -->
-            <CreateBuildingModal 
-                v-if="showCreateBuildingModal" 
-                @close="closeCreateBuildingModal" 
-                @buildingCreated="handleBuildingCreated" 
-            />
         </div>
     </div>
 </template>
@@ -47,17 +36,12 @@
 import { ref, onMounted } from 'vue';
 import apiClient from '@/services/api';
 import BuildingCard from '@/components/BuildingCard.vue'; // Import the BuildingCard component
-import StaffSidebar from '@/components/StaffSidebar.vue';
-import CreateBuildingModal from '@/components/CreateBuildingModal.vue'; // Import the modal
+import CompanySidebar from '@/components/CompanySidebar.vue';
 
 const buildings = ref([]);
 const loading = ref(true);
 const error = ref(null);
 
-// Modal state
-const showCreateBuildingModal = ref(false);
-
-// Fetch buildings from the backend
 const fetchBuildings = async () => {
     try {
         const response = await apiClient.get('/buildings/');
@@ -68,22 +52,6 @@ const fetchBuildings = async () => {
     } finally {
         loading.value = false;
     }
-};
-
-// Open the create building modal
-const openCreateBuildingModal = () => {
-    showCreateBuildingModal.value = true;
-};
-
-// Close the create building modal
-const closeCreateBuildingModal = () => {
-    showCreateBuildingModal.value = false;
-};
-
-// Handle building creation event
-const handleBuildingCreated = (newBuilding) => {
-    // Refresh the list or append new building
-    buildings.value.push(newBuilding);  // Add the new building to the list
 };
 
 onMounted(() => {

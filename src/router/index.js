@@ -5,6 +5,7 @@ import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Company from '../views/Company.vue';  // Add Company view
 import Staff from '../views/Staff.vue';  // Add Staff view
+import StaffCustomerPayments from '../views/Staff/Payments.vue';  // Add StaffCustomerPayments view
 import Customer from '../views/Customer.vue';  // Add Customer view
 import Buildings from '../views/Staff/Buildings.vue';  // Add StaffBuildings view
 import BuildingDetails from '../views/Staff/BuildingDetails.vue';  // Add BuildingDetails view
@@ -12,6 +13,14 @@ import Customers from '../views/Staff/Customers.vue';  // Add Customers view
 import Contracts from '../views/Staff/Contracts.vue';  // Add Contracts view
 import ContractDetails from '../views/Staff/ContractDetails.vue';  // Add ContractDetails view
 import CreateContract from '../views/Staff/CreateContract.vue';  // Add CreateContract view
+import CompanyBuildings from '../views/Company/Buildings.vue';  // Add CompanyBuildings view
+import CompanyStaff from '../views/Company/Staff.vue';  // Add CompanyStaff view
+import CompanyContracts from '../views/Company/Contracts.vue';  // Add CompanyContracts view
+import CompanyContractDetails from '../views/Company/ContractDetails.vue';  // Add CompanyContractDetails view
+import CustomerPage from '../views/Customer.vue';  // Add Customer view
+import CustomerContracts from '../views/Customer/Contracts.vue';  // Add CustomerContracts view
+import TerminatedContracts from '../views/Staff/TerminatedContracts.vue';  // Add TerminatedContracts view
+import TerminatedContractDetails from '../views/Staff/TerminatedContractDetails.vue';  // Add TerminatedContractDetails view
 
 const routes = [
   {
@@ -62,10 +71,28 @@ const routes = [
     meta: { requiresAuth: true, role: 'staff' }, // Ensure only authenticated users can access
   },
   {
+    path: '/staff/payments',
+    name: 'StaffCustomerPayments',
+    component: StaffCustomerPayments,
+    meta: { requiresAuth: true, role: 'staff' }, // Ensure only authenticated users can access
+  },
+  {
     path: '/staff/contracts',
     name: 'Contracts',
     component: Contracts,
     meta: { requiresAuth: true, role: 'staff' }, // Ensure only authenticated users can access
+  },
+  {
+    path: '/staff/terminated/contracts',
+    name: 'TerminatedContracts',
+    component: TerminatedContracts,
+    meta: { requiresAuth: true, role: 'staff' }, // Ensure only authenticated users can access
+  },
+  {
+    path: '/staff/terminated/contracts/:contract_id',
+    name: 'TerminatedContractDetails',
+    component: TerminatedContractDetails,
+    props: true,
   },
   {
     path: '/staff/contracts/:contract_id',
@@ -78,7 +105,43 @@ const routes = [
     name: 'CreateContract',
     component: CreateContract,
     meta: { requiresAuth: true, role: 'staff' }, // Ensure only authenticated users can access
-  }
+  },
+  {
+    path: '/company/buildings',
+    name: 'CompanyBuildings',
+    component: CompanyBuildings,
+    meta: { requiresAuth: true, role: 'company' }, // Ensure only authenticated users can access
+  },
+  {
+    path: '/company/staff',
+    name: 'CompanyStaff',
+    component: CompanyStaff,
+    meta: { requiresAuth: true, role: 'company' }, // Ensure only authenticated users can access
+  },
+  {
+    path: '/company/contracts',
+    name: 'CompanyContracts',
+    component: CompanyContracts,
+    meta: { requiresAuth: true, role: 'company' }, // Ensure only authenticated users can access
+  },
+  {
+    path: '/company/contracts/:contract_id',
+    name: 'CompanyContractDetails',
+    component: CompanyContractDetails,
+    props: true,
+  },
+  {
+    path: '/customer',
+    name: 'CustomerPage',
+    component: CustomerPage,
+    meta: { requiresAuth: true, role: 'customer' }, // Ensure only authenticated users can access
+  },
+  {
+    path: '/customer/contracts',
+    name: 'CustomerContracts',
+    component: CustomerContracts,
+    meta: { requiresAuth: true, role: 'customer' }, // Ensure only authenticated users can access
+  },
 ];
 
 const router = createRouter({

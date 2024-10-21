@@ -29,13 +29,13 @@
                         <td class="px-4">{{ formatPrice(record.payment_amount_paid) }} UZS</td>
                         <td class="px-4">{{ formatPrice(record.customer_debt) }} UZS</td>
                         <td class="px-4">
-                            <button @click="openMakePaymentModal(record)"
+                            <button disabled @click="openMakePaymentModal(record)"
                                 class="btn btn-info bg-blue-800 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600">
                                 Make Payment
                             </button>
                         </td>
                         <td class="px-4">
-                            <button @click="openSavePaymentModal(record)"
+                            <button disabled @click="openSavePaymentModal(record)"
                                 class="btn btn-warning bg-blue-800 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600">
                                 Save Payment
                             </button>

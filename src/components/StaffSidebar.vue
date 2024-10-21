@@ -62,6 +62,32 @@
             Manage Contracts
           </RouterLink>
         </li>
+        <li>
+          <RouterLink
+            class="nav-link"
+            to="/staff/terminated/contracts"
+            active-class="active"
+            exact-active-class="exact-active"
+          >
+            <svg class="bi pe-none me-2" width="16" height="16">
+              <use xlink:href="#grid"></use>
+            </svg>
+            Manage Terminated Contracts
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink
+            class="nav-link"
+            to="/staff/payments"
+            active-class="active"
+            exact-active-class="exact-active"
+          >
+            <svg class="bi pe-none me-2" width="16" height="16">
+              <use xlink:href="#grid"></use>
+            </svg>
+            Manage Payments
+          </RouterLink>
+        </li>
       </ul>
       <hr />
       <div class="dropdown">

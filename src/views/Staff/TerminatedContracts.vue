@@ -2,14 +2,11 @@
     <div class="d-flex">
         <!-- Sidebar -->
         <StaffSidebar />
-
+        
         <!-- Main Content Area -->
         <div class="container mt-5" style="flex: 1;">
             <h2 class="mb-4 text-center">Manage Contracts</h2>
 
-            <div>
-                <RouterLink to="/staff/contracts/create" class="btn btn-primary mb-3">Create Contract</RouterLink>
-            </div>
 
             <div v-if="loadingContracts" class="text-center my-5">
                 <div class="spinner-border" role="status">
@@ -22,7 +19,7 @@
             <div v-else>
                 <div class="row row-cols-1 row-cols-md-2 g-4">
                     <div class="col" v-for="contract in contracts" :key="contract.id">
-                        <ContractCard :contract="contract" />
+                        <TerminateContractCard :contract="contract" />
                     </div>
                 </div>
             </div>
@@ -34,7 +31,7 @@
 import { ref, onMounted } from 'vue';
 import apiClient from '@/services/api'; // Assuming Axios is setup
 import StaffSidebar from '@/components/StaffSidebar.vue'; // Include the sidebar
-import ContractCard from '@/components/ContractCard.vue'; // Include the reusable contract card
+import TerminateContractCard from '@/components/TerminateContractCard.vue'; // Include the reusable contract card
 
 // Data for Contracts
 const contracts = ref([]);
@@ -44,7 +41,7 @@ const errorContracts = ref(null);
 // Fetch Contracts
 const fetchContracts = async () => {
     try {
-        const response = await apiClient.get('/contracts/staff/contracts/');
+        const response = await apiClient.get('/contracts/staff/contracts/terminate/list');
         contracts.value = response.data;
     } catch (error) {
         errorContracts.value = 'Failed to fetch contracts.';

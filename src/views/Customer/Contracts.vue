@@ -1,15 +1,11 @@
 <template>
     <div class="d-flex">
         <!-- Sidebar -->
-        <StaffSidebar />
+        <CustomerSidebar />
 
         <!-- Main Content Area -->
         <div class="container mt-5" style="flex: 1;">
             <h2 class="mb-4 text-center">Manage Contracts</h2>
-
-            <div>
-                <RouterLink to="/staff/contracts/create" class="btn btn-primary mb-3">Create Contract</RouterLink>
-            </div>
 
             <div v-if="loadingContracts" class="text-center my-5">
                 <div class="spinner-border" role="status">
@@ -33,7 +29,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import apiClient from '@/services/api'; // Assuming Axios is setup
-import StaffSidebar from '@/components/StaffSidebar.vue'; // Include the sidebar
+import CustomerSidebar from '@/components/CustomerSidebar.vue'; // Include the sidebar
 import ContractCard from '@/components/ContractCard.vue'; // Include the reusable contract card
 
 // Data for Contracts
@@ -44,7 +40,7 @@ const errorContracts = ref(null);
 // Fetch Contracts
 const fetchContracts = async () => {
     try {
-        const response = await apiClient.get('/contracts/staff/contracts/');
+        const response = await apiClient.get('/contracts/customer/contracts/');
         contracts.value = response.data;
     } catch (error) {
         errorContracts.value = 'Failed to fetch contracts.';

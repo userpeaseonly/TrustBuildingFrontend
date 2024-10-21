@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex">
         <!-- Sidebar -->
-        <StaffSidebar />
+        <CompanySidebar />
 
         <!-- Main Content Area -->
         <div class="container mt-5" style="flex: 1;">
@@ -33,7 +33,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import apiClient from '@/services/api'; // Assuming Axios is setup
-import StaffSidebar from '@/components/StaffSidebar.vue'; // Include the sidebar
+import CompanySidebar from '@/components/CompanySidebar.vue'; // Include the sidebar
 import ContractCard from '@/components/ContractCard.vue'; // Include the reusable contract card
 
 // Data for Contracts
@@ -44,7 +44,7 @@ const errorContracts = ref(null);
 // Fetch Contracts
 const fetchContracts = async () => {
     try {
-        const response = await apiClient.get('/contracts/staff/contracts/');
+        const response = await apiClient.get('/contracts/company/contracts/');
         contracts.value = response.data;
     } catch (error) {
         errorContracts.value = 'Failed to fetch contracts.';

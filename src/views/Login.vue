@@ -71,7 +71,8 @@ export default {
           await this.verifyOtp(this.otp);
         }
       } catch (error) {
-        this.error = error.response?.data?.message || 'An error occurred';
+        console.log('error', error);
+        this.error = error || 'An error occurred';
       } finally {
         this.loading = false;
       }

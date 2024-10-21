@@ -114,73 +114,9 @@
                     {{ formatPrice(contract.monthly_payment) }} UZS
                 </p>
             </div>
-            <div class="border-top pt-3 mt-3">
-                <button @click="openTerminateContract"
-                    class="btn btn-danger bg-red-600 text-white font-semibold px-4 py-2 rounded hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-600">
-                    Terminate Contract
-                </button>
-            </div>
         </div>
     </div>
 
-    <!-- Termination Confirmation Modal -->
-    <div v-if="showInitTerminationModal" class="modal fade show d-block" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Terminate Contract</h5>
-                    <button type="button" class="btn-close" @click="closeModal"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to initiate the termination of this contract?</p>
-                    <div v-if="initError" class="alert alert-danger">{{ initError }}</div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" @click="closeModal">Cancel</button>
-                    <button type="button" class="btn btn-danger" @click="initTerminateContract">Init
-                        Termination</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Termination Details Modal -->
-    <div v-if="showTerminationForm" class="modal fade show d-block" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Finalize Termination</h5>
-                    <button type="button" class="btn-close" @click="closeModal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Company Verification Code</label>
-                        <input v-model="terminationData.company_verification_code" type="text" class="form-control" />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Termination Reason</label>
-                        <textarea v-model="terminationData.termination_reason" class="form-control"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Termination Fine Amount</label>
-                        <input v-model="terminationData.termination_fine_amount" type="text" class="form-control" />
-                    </div>
-
-                    <div v-if="terminationErrors" class="alert alert-danger">
-                        <ul>
-                            <li v-for="(error, field) in terminationErrors" :key="field">{{ field }}: {{ error[0] }}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" @click="closeModal">Cancel</button>
-                    <button type="button" class="btn btn-danger" @click="finalizeTermination">Submit
-                        Termination</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </template>
 
 <script setup>
@@ -201,59 +137,7 @@ const terminationData = ref({
 });
 const terminationErrors = ref(null);
 
-// Open initial termination confirmation modal
-const openTerminateContract = () => {
-    showInitTerminationModal.value = true;
-    initError.value = null;
-};
 
-// Close any modal
-const closeModal = () => {
-    showInitTerminationModal.value = false;
-    showTerminationForm.value = false;
-    initError.value = null;
-    terminationErrors.value = null;
-};
-
-// Initiate contract termination
-const initTerminateContract = async () => {
-    try {
-        const response = await apiClient.post('/contracts/staff/contracts/terminate/init/', {
-            contract: props.contract.id
-        });
-        if (response.status === 200) {
-            // If successful, close the init modal and show the termination form
-            showInitTerminationModal.value = false;
-            showTerminationForm.value = true;
-        }
-    } catch (error) {
-        if (error.response && error.response.data) {
-            initError.value = error.response.data.non_field_errors || 'Failed to initiate termination.';
-        } else {
-            initError.value = 'An unexpected error occurred.';
-        }
-    }
-};
-
-// Finalize termination with additional details
-const finalizeTermination = async () => {
-    try {
-        const response = await apiClient.post('/contracts/staff/contracts/terminate/', {
-            contract_id: props.contract.id,
-            ...terminationData.value
-        });
-        if (response.status === 201) {
-            alert('Termination completed successfully');
-            closeModal();
-        }
-    } catch (error) {
-        if (error.response && error.response.data) {
-            terminationErrors.value = error.response.data;
-        } else {
-            terminationErrors.value = { non_field_errors: ['An unexpected error occurred.'] };
-        }
-    }
-};
 
 const formatPrice = (price) => new Intl.NumberFormat('uz-UZ').format(price);
 

@@ -58,9 +58,11 @@
             </div>
 
             <!-- Button to go to contract details -->
-            <RouterLink :to="`/${userRole}/contracts/${contract.id}`" class="btn btn-primary mt-3">
+            <RouterLink :to="`/${userRole}/contracts/${contract.id}`" class="btn btn-warning mt-3">
                 View Details
-            </RouterLink>
+            </RouterLink>&nbsp;
+
+            <button @click="makePayment" class="btn btn-success mt-3">Make Payment</button>
         </div>
     </div>
 </template>
@@ -82,6 +84,11 @@ const props = defineProps({
     },
 });
 
+const emit = defineEmits(['makePayment']);
+
+const makePayment = () => {
+    emit('makePayment', props.contract);
+};
 // Helper function to format price
 const formatPrice = (price) => {
     return new Intl.NumberFormat('uz-UZ').format(price);

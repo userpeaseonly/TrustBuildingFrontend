@@ -12,7 +12,7 @@
     <div class="mb-3">
         <p class="card-text d-flex align-items-center">
         <i class="bi bi-telephone-fill me-2"></i> 
-        <strong>Phone:</strong> {{ customer.user.phone_number }}
+        <strong>Phone:&nbsp;</strong> {{ customer.user.phone_number }}
         </p>
         <p v-if="customer.phone_number2" class="card-text d-flex align-items-center">
         <i class="bi bi-telephone-fill me-2"></i> 
@@ -24,11 +24,11 @@
     <div class="mb-3">
         <p class="card-text d-flex align-items-center">
         <i class="bi bi-file-earmark-text-fill me-2"></i> 
-        <strong>Passport:</strong> {{ customer.passport_series }}
+        <strong>Passport:&nbsp;</strong> {{ customer.passport_series }}
         </p>
         <p class="card-text d-flex align-items-center">
         <i class="bi bi-calendar-fill me-2"></i> 
-        <strong>Issued At:</strong> {{ customer.passport_place_issuance }} on {{ formatDate(customer.passport_date_issuance) }}
+        <strong>Issued At:&nbsp;</strong> {{ customer.passport_place_issuance }} on {{ formatDate(customer.passport_date_issuance) }}
         </p>
     </div>
 
