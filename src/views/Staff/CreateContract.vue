@@ -68,7 +68,7 @@ import InputPaymentDetails from '@/components/InputPaymentDetails.vue';
 const selectedBuilding = ref(null);
 const selectedApartment = ref(null);
 const selectedCustomer = ref(null);
-const contractDate = ref('');
+const contractDate = ref(new Date().toISOString().slice(0, 10)); // Default to today's date
 const pricePerSquare = ref('');
 const paymentMonths = ref(1);
 
@@ -76,7 +76,7 @@ const paymentMonths = ref(1);
 const downPaymentIncluded = ref(false);
 const lastPaymentIncluded = ref(false);
 const downPayment = ref({
-    payment_date: '',
+    payment_date: new Date().toISOString().slice(0, 10),
     payment_amount: '',
     payment_method: '',
     payment_reference: '',
@@ -105,6 +105,7 @@ const fetchBuildings = async () => {
 
 const fetchApartments = async () => {
     const response = await apiClient.get(`/buildings/${selectedBuilding.value}/apartments/`);
+    console.log(response.data);
     apartments.value = response.data;
 };
 
@@ -130,7 +131,7 @@ const submitContract = async () => {
     if (lastPaymentIncluded.value) {
         data.last_payment = lastPayment.value;
     }
-    console.log(data);
+
     try {
         await apiClient.post('/contracts/staff/contracts/create/', data);
         alert('Contract created successfully');

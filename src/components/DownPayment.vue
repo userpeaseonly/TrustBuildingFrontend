@@ -18,21 +18,30 @@
                         <td>{{ formatPrice(payment.payment_amount) }} UZS</td>
                         <td>{{ payment.payment_method }}</td>
                         <td>{{ payment.payment_reference }}</td>
-                        <td><span v-if="payment.payment_paid" class="badge bg-success">Paid</span><span v-else class="badge bg-danger">Unpaid</span></td>
+                        <td>
+                            <span v-if="payment.payment_paid" class="badge bg-success">Paid</span>
+                            <span v-else class="badge bg-danger">Unpaid</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
+            <!-- Update Button -->
+            <button class="btn btn-primary mt-3" @click="openUpdateModal">Update Down Payment</button>
         </div>
     </div>
 </template>
-
-
-
 
 <script setup>
 const props = defineProps({
     payment: Object
 });
 
+const emit = defineEmits(['openUpdateModal']);
+
 const formatPrice = (price) => new Intl.NumberFormat('uz-UZ').format(price);
+
+// Emit event to parent to open the update modal with payment details
+const openUpdateModal = () => {
+    emit('openUpdateModal', props.payment); // Pass the payment object
+};
 </script>
