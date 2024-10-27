@@ -1,35 +1,68 @@
 <template>
-    <div class="d-flex">
+    <div class="flex">
+        <!-- Sidebar -->
         <StaffSidebar />
-        <div class="container mt-5">
-            <h2 class="mb-4">Payments</h2>
 
-            <!-- Search Input -->
-            <div class="input-group mb-4">
-                <input type="text" v-model="searchQuery" @input="fetchCustomers" class="form-control"
-                    placeholder="Search customers..." />
+        <!-- Main Content Area -->
+        <div class="container mx-auto mt-10 p-6 bg-white shadow-md rounded-lg w-full max-w-5xl flex">
+            <!-- Customer Search and List -->
+            <div class="w-1/2 pr-6">
+                <h2 class="text-3xl font-bold mb-6">Payments</h2>
+
+                <!-- Search Input -->
+                <div class="mb-6">
+                    <input
+                        type="text"
+                        v-model="searchQuery"
+                        @input="fetchCustomers"
+                        class="w-full border border-gray-300 rounded-lg p-3 text-sm"
+                        placeholder="Search customers... (Name, Passport)"
+                    />
+                </div>
+
+                <!-- Customer List -->
+                <div v-if="loadingCustomers" class="flex justify-center items-center mb-6">
+                    <div class="animate-spin h-10 w-10 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+                </div>
+
+                <div v-else-if="customers.length > 0" class="cursor-pointer customer-list flex flex-wrap gap-4">
+                    <CustomerCard
+                        v-for="customer in customers"
+                        :key="customer.id"
+                        :customer="customer"
+                        @selectCustomer="fetchContracts"
+                    />
+                </div>
+                
+                <!-- No customers found -->
+                <div v-else class="text-center py-6 bg-yellow-100 text-yellow-800 rounded-lg mb-6">
+                    No customers found. Please refine your search.
+                </div>
             </div>
 
-            <!-- Customer List -->
-            <div v-if="loadingCustomers" class="text-center">
-                <div class="spinner-border" role="status"></div>
+            <!-- Contract List Section -->
+            <div class="w-1/2 pl-6">
+                <div v-if="selectedCustomer && contracts.length > 0" class="contract-list">
+                    <h3 class="text-2xl font-semibold mb-6 text-gray-800 text-center">Contracts for {{ selectedCustomer.first_name }} {{ selectedCustomer.last_name }}</h3>
+                    <div class="flex flex-wrap gap-4">
+                        <ContractCard
+                            v-for="contract in contracts"
+                            :key="contract.id"
+                            :contract="contract"
+                            @makePayment="openPaymentModal"
+                        />
+                    </div>
+                </div>
             </div>
-
-            <div v-else-if="customers.length > 0" class="customer-list">
-                <CustomerCard v-for="customer in customers" :key="customer.id" :customer="customer"
-                    @selectCustomer="fetchContracts" />
-            </div>
-
-            <!-- Contract List -->
-            <div v-if="selectedCustomer && contracts.length > 0" class="contract-list mt-5">
-                <ContractCard v-for="contract in contracts" :key="contract.id" :contract="contract"
-                    @makePayment="openPaymentModal" />
-            </div>
-
-            <!-- Payment Modal -->
-            <PaymentModal v-if="showPaymentModal" :contract="selectedContract" @submitPayment="submitPayment"
-                @close="showPaymentModal = false" />
         </div>
+
+        <!-- Payment Modal -->
+        <PaymentModal
+            v-if="showPaymentModal"
+            :contract="selectedContract"
+            @submitPayment="submitPayment"
+            @close="showPaymentModal = false"
+        />
     </div>
 </template>
 
@@ -86,6 +119,7 @@ const submitPayment = async (paymentData) => {
         await apiClient.post('/contracts/contract/payment-record/make-payment-with-contract/', paymentData);
         alert('Payment successful!');
         showPaymentModal.value = false;
+        fetchContracts(selectedCustomer.value.id); // Refresh contracts list after payment
     } catch (error) {
         alert('Failed to make payment.');
         console.error(error);
@@ -101,13 +135,10 @@ onMounted(() => {
 <style scoped>
 .customer-list,
 .contract-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
-.spinner-border {
-    width: 3rem;
-    height: 3rem;
+.animate-spin {
+    border-top-color: transparent;
 }
 </style>

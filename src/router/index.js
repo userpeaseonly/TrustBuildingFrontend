@@ -21,6 +21,8 @@ import CustomerPage from '../views/Customer.vue';  // Add Customer view
 import CustomerContracts from '../views/Customer/Contracts.vue';  // Add CustomerContracts view
 import TerminatedContracts from '../views/Staff/TerminatedContracts.vue';  // Add TerminatedContracts view
 import TerminatedContractDetails from '../views/Staff/TerminatedContractDetails.vue';  // Add TerminatedContractDetails view
+import CompanyTerminatedContracts from '../views/Company/TerminatedContracts.vue';  // Add CompanyTerminatedContracts view
+import CompanyTerminatedContractDetails from '../views/Company/TerminatedContractDetails.vue';  // Add CompanyTerminatedContractDetails view
 
 const routes = [
   {
@@ -89,9 +91,21 @@ const routes = [
     meta: { requiresAuth: true, role: 'staff' }, // Ensure only authenticated users can access
   },
   {
+    path: '/company/terminated/contracts',
+    name: 'CompanyTerminatedContracts',
+    component: CompanyTerminatedContracts,
+    meta: { requiresAuth: true, role: 'company' }, // Ensure only authenticated users
+  },
+  {
     path: '/staff/terminated/contracts/:contract_id',
     name: 'TerminatedContractDetails',
     component: TerminatedContractDetails,
+    props: true,
+  },
+  {
+    path: '/company/terminated/contracts/:contract_id',
+    name: 'CompanyTerminatedContractDetails',
+    component: CompanyTerminatedContractDetails,
     props: true,
   },
   {

@@ -1,44 +1,38 @@
 <template>
-    <div class="d-flex">
+    <div class="flex h-screen">
         <!-- Sidebar -->
         <StaffSidebar />
 
         <!-- Main content area -->
-        <div class="content-container">
-            <h2 class="mb-4">Manage Buildings</h2>
+        <div class="content-container flex-1 p-8 bg-gray-50">
+            <h2 class="text-2xl font-semibold text-center text-indigo-700 mb-6">Manage Buildings</h2>
 
             <!-- Button to open create building form -->
-            <button class="btn btn-primary mb-4" @click="openCreateBuildingModal">
+            <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded mb-6"
+                @click="openCreateBuildingModal">
                 Create New Building
             </button>
 
             <!-- Loading Spinner -->
-            <div v-if="loading" class="d-flex justify-content-center align-items-center" style="height: 200px;">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
+            <div v-if="loading" class="flex justify-center items-center h-48">
+                <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-indigo-500"></div>
             </div>
 
             <!-- Error Message -->
-            <div v-else-if="error" class="alert alert-danger text-center">
+            <div v-else-if="error" class="text-red-600 bg-red-100 rounded p-4 text-center">
                 {{ error }}
             </div>
 
             <!-- Buildings List -->
-            <div v-else>
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                    <div class="col" v-for="building in buildings" :key="building.id">
-                        <BuildingCard :building="building" />
-                    </div>
+            <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div v-for="building in buildings" :key="building.id">
+                    <BuildingCard :building="building" />
                 </div>
             </div>
 
             <!-- Create Building Modal -->
-            <CreateBuildingModal 
-                v-if="showCreateBuildingModal" 
-                @close="closeCreateBuildingModal" 
-                @buildingCreated="handleBuildingCreated" 
-            />
+            <CreateBuildingModal v-if="showCreateBuildingModal" @close="closeCreateBuildingModal"
+                @buildingCreated="handleBuildingCreated" />
         </div>
     </div>
 </template>
@@ -46,18 +40,16 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import apiClient from '@/services/api';
-import BuildingCard from '@/components/BuildingCard.vue'; // Import the BuildingCard component
+import BuildingCard from '@/components/BuildingCard.vue';
 import StaffSidebar from '@/components/StaffSidebar.vue';
-import CreateBuildingModal from '@/components/CreateBuildingModal.vue'; // Import the modal
+import CreateBuildingModal from '@/components/CreateBuildingModal.vue';
 
 const buildings = ref([]);
 const loading = ref(true);
 const error = ref(null);
 
-// Modal state
 const showCreateBuildingModal = ref(false);
 
-// Fetch buildings from the backend
 const fetchBuildings = async () => {
     try {
         const response = await apiClient.get('/buildings/');
@@ -70,20 +62,16 @@ const fetchBuildings = async () => {
     }
 };
 
-// Open the create building modal
 const openCreateBuildingModal = () => {
     showCreateBuildingModal.value = true;
 };
 
-// Close the create building modal
 const closeCreateBuildingModal = () => {
     showCreateBuildingModal.value = false;
 };
 
-// Handle building creation event
 const handleBuildingCreated = (newBuilding) => {
-    // Refresh the list or append new building
-    buildings.value.push(newBuilding);  // Add the new building to the list
+    buildings.value.push(newBuilding);
 };
 
 onMounted(() => {
@@ -93,31 +81,6 @@ onMounted(() => {
 
 <style scoped>
 .content-container {
-    flex: 1;
-    padding: 2rem;
     min-height: 100vh;
-    /* Ensure it takes full height of the viewport */
-    background-color: #f9f9f9;
-    /* Light background for better separation */
-}
-
-h2 {
-    font-weight: 600;
-    text-align: center;
-}
-
-.row-cols-lg-3 .col {
-    max-width: 33.333%;
-    /* Adjust column width for larger screens */
-}
-
-.alert-danger {
-    padding: 1.5rem;
-    border-radius: 8px;
-}
-
-.spinner-border {
-    width: 3rem;
-    height: 3rem;
 }
 </style>

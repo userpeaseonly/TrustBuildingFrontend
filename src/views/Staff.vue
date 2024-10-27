@@ -1,13 +1,14 @@
-<!-- src/views/Staff.vue -->
 <template>
-  <div class="d-flex">
+  <div class="flex h-screen">
     <!-- Sidebar -->
     <StaffSidebar />
 
     <!-- Content -->
-    <div class="content-container">
-      <h1>Staff Dashboard</h1>
-      <p>Welcome, staff user!</p>
+    <div class="flex-1 p-8 bg-gray-50">
+      <div class="bg-white shadow-md rounded-lg p-6 max-w-3xl mx-auto text-center">
+        <h1 class="text-3xl font-semibold text-indigo-600">Staff Dashboard</h1>
+        <p class="text-gray-700 text-lg mt-4">Welcome, staff user!</p>
+      </div>
     </div>
   </div>
 </template>
@@ -23,8 +24,5 @@ export default {
 </script>
 
 <style scoped>
-.content-container {
-  padding: 20px;
-  flex: 1;
-}
+/* Additional custom styling can go here */
 </style>

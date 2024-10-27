@@ -1,26 +1,26 @@
 <template>
-    <div class="d-flex">
+    <div class="flex">
         <!-- Sidebar -->
         <StaffSidebar />
         
         <!-- Main Content Area -->
-        <div class="container mt-5" style="flex: 1;">
-            <h2 class="mb-4 text-center">Manage Contracts</h2>
+        <div class="container mx-auto mt-10 p-6 bg-white shadow-md rounded-lg w-full max-w-5xl">
+            <h2 class="text-3xl font-bold mb-6 text-center">Manage Terminated Contracts</h2>
 
-
-            <div v-if="loadingContracts" class="text-center my-5">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
+            <!-- Loading Spinner -->
+            <div v-if="loadingContracts" class="flex justify-center items-center my-10">
+                <div class="animate-spin h-12 w-12 border-4 border-blue-500 border-t-transparent rounded-full"></div>
             </div>
-            <div v-else-if="errorContracts" class="alert alert-danger text-center">
+
+            <!-- Error Message -->
+            <div v-else-if="errorContracts" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-center mb-6">
                 {{ errorContracts }}
             </div>
+
+            <!-- Terminated Contracts List -->
             <div v-else>
-                <div class="row row-cols-1 row-cols-md-2 g-4">
-                    <div class="col" v-for="contract in contracts" :key="contract.id">
-                        <TerminateContractCard :contract="contract" />
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <TerminateContractCard v-for="contract in contracts" :key="contract.id" :contract="contract" />
                 </div>
             </div>
         </div>
@@ -56,34 +56,5 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.container {
-    max-width: 1200px;
-}
-
-h2 {
-    font-weight: bold;
-}
-
-.spinner-border {
-    width: 3rem;
-    height: 3rem;
-}
-
-.alert {
-    font-size: 1rem;
-}
-
-.card {
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-}
-
-.text-muted {
-    color: #6c757d;
-}
+/* No additional custom styles needed as Tailwind CSS classes handle the styling effectively */
 </style>
