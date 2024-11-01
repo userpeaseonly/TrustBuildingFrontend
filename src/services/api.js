@@ -4,7 +4,7 @@ import store from '../store';
 import router from '../router';
 
 const apiClient = axios.create({
-  baseURL: 'https://fd0b18aeb57ceb98faf7720fd795c076.serveo.net/api',
+  baseURL: 'http://0.0.0.0:8020/api',
 });
 
 // Attach token to requests
