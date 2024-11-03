@@ -53,16 +53,12 @@ export default {
         async fetchUserRole({ commit }) {
             try {
                 const response = await apiClient.get('/users/user-type/');
-                console.log("============== response.data ==============");
-                console.log(response.data);
                 if (response.data && response.data.user_type) {
                     commit('SET_ROLE', response.data.user_type);
                 } else {
                     throw new Error('User role data is invalid');
                 }
             } catch (error) {
-                console.log("============== error ==============");
-                console.log(error);
                 throw new Error('Failed to fetch user role');
             }
         },

@@ -1,9 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
@@ -15,5 +13,9 @@ export default defineConfig({
   },
   build: {
     sourcemap: false // Disables source maps
+  },
+  server: {
+    host: '0.0.0.0', // Allows the server to be accessible externally
+    port: 5173,      // Specify the port to use
   }
 })
