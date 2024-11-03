@@ -1,91 +1,70 @@
-<!-- src/components/BuildingCard.vue -->
 <template>
-<div class="card shadow-sm border-light h-100">
-    <div class="card-body">
-    <!-- Header Section: Building Number & Address -->
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="card-title mb-0">Building {{ building.building_number }}</h5>
-        <small class="text-muted">{{ building.address }}</small>
-    </div>
-    
-    <!-- Building Details Section -->
-    <div class="mb-3">
-        <ul class="list-unstyled">
-        <li>
-            <i class="bi bi-box"></i> Block: <strong>{{ building.block_number }}</strong>
-        </li>
-        <li>
-            <i class="bi bi-building"></i> Floors: <strong>{{ building.floor_count }}</strong>
-        </li>
-        <li>
-            <i class="bi bi-house"></i> Apartments: <strong>{{ building.apartment_count }}</strong>
-        </li>
-        <li>
-            <i class="bi bi-door-closed"></i> Entrances: <strong>{{ building.entrance_count }}</strong>
-        </li>
-        </ul>
-    </div>
-    
-    <!-- Staff Section -->
-    <div class="staff-info">
-        <h6 class="text-secondary">Staff Assigned</h6>
-        <p class="mb-1"><i class="bi bi-person"></i> {{ building.staff_details.first_name }} {{ building.staff_details.last_name }}</p>
-    </div>
+    <div class="bg-white shadow-md rounded-lg h-full border border-gray-200">
+        <div class="p-6">
+            <!-- Header Section: Building Number & Address -->
+            <div class="flex justify-between items-center mb-4">
+                <h5 class="text-lg font-semibold">Building {{ building.building_number }}</h5>
+                <small class="text-gray-500">{{ building.address }}</small>
+            </div>
 
-    <!-- Footer Section: Last Updated -->
-    <div class="text-muted">
-        <small class="text-muted">
-        Created at: {{ formatDate(building.created_at) }}
-        </small>
-    </div>
+            <!-- Building Details Section -->
+            <div class="mb-4">
+                <ul class="space-y-2">
+                    <li class="flex items-center">
+                        <i class="bi bi-box mr-2"></i>
+                        Block: <strong class="ml-1">{{ building.block_number }}</strong>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="bi bi-building mr-2"></i>
+                        Floors: <strong class="ml-1">{{ building.floor_count }}</strong>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="bi bi-house mr-2"></i>
+                        Apartments: <strong class="ml-1">{{ building.apartment_count }}</strong>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="bi bi-door-closed mr-2"></i>
+                        Entrances: <strong class="ml-1">{{ building.entrance_count }}</strong>
+                    </li>
+                </ul>
+            </div>
 
-    <!-- <div class="">
-        <small class="text-muted">
-        Last updated: {{ formatDate(building.updated_at) }}
-        </small>
-    </div> -->
-    <!-- Manage Building Button -->
-    <RouterLink :to="`/building/${building.id}/apartments`" class="btn btn-primary mt-3">
-        Manage Building
-    </RouterLink>
+            <!-- Staff Section -->
+            <div class="border-t border-gray-200 pt-4">
+                <h6 class="text-sm text-gray-600 font-medium mb-2">Staff Assigned</h6>
+                <p class="mb-1">
+                    <i class="bi bi-person mr-2"></i>
+                    {{ building.staff_details.first_name }} {{ building.staff_details.last_name }}
+                </p>
+            </div>
+
+            <!-- Footer Section: Last Updated -->
+            <div class="text-gray-500 mt-4">
+                <small>Created at: {{ formatDate(building.created_at) }}</small>
+            </div>
+
+            <!-- Manage Building Button -->
+            <RouterLink :to="`/building/${building.id}/apartments`"
+                class="block bg-blue-600 text-white text-center mt-6 py-2 rounded hover:bg-blue-700">
+                Manage Building
+            </RouterLink>
+        </div>
     </div>
-</div>
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
 
 // Props
 const props = defineProps({
-building: Object,
+    building: Object,
 });
 
 // Helper function to format the date
 const formatDate = (date) => {
-return new Date(date).toLocaleString();
+    return new Date(date).toLocaleString();
 };
 </script>
 
 <style scoped>
-.card {
-border-radius: 10px;
-}
-
-.card-body {
-padding: 20px;
-}
-
-.list-unstyled li {
-margin-bottom: 0.5rem;
-}
-
-.staff-info {
-margin-top: 10px;
-padding-top: 10px;
-border-top: 1px solid #eaeaea;
-}
-
-h6 {
-font-size: 0.95rem;
-}
+/* No custom CSS is needed as all styles are handled by Tailwind CSS */
 </style>

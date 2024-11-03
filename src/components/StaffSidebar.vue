@@ -1,128 +1,130 @@
-<!-- src/components/StaffSidebar.vue -->
 <template>
-  <div class="d-flex flex-column flex-shrink-0 p-3 bg-light h-100" style="width: 360px;">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-      <svg class="bi pe-none me-2" width="40" height="32">
-        <use xlink:href="#bootstrap"></use>
+  <div class="flex flex-col p-4 bg-gray-100 w-80 h-full">
+    <a href="/" class="flex items-center mb-4 text-gray-800 no-underline">
+      <svg class="w-10 h-8 text-indigo-600 mr-3">
+        <use xlink:href="#logo-icon"></use>
       </svg>
-      <span class="fs-4">Staff Sidebar</span>
+      <span class="text-2xl font-semibold">Staff Sidebar</span>
     </a>
-    <hr />
+    <hr class="border-gray-300 mb-4" />
+    
     <nav>
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
+      <ul class="space-y-2">
+        <li>
           <RouterLink
-            class="nav-link"
             to="/staff"
-            active-class="active"
-            exact-active-class="exact-active"
+            class="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-600 hover:text-white"
+            active-class="bg-indigo-600 text-white"
           >
-            <svg class="bi pe-none me-2" width="16" height="16">
-              <use xlink:href="#home"></use>
+            <svg class="w-5 h-5 mr-3 text-current">
+              <use xlink:href="#home-icon"></use>
             </svg>
             Staff Dashboard
           </RouterLink>
         </li>
         <li>
           <RouterLink
-            class="nav-link"
             to="/staff/buildings"
-            active-class="active"
-            exact-active-class="exact-active"
+            class="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-600 hover:text-white"
+            active-class="bg-indigo-600 text-white"
           >
-            <svg class="bi pe-none me-2" width="16" height="16">
-              <use xlink:href="#table"></use>
+            <svg class="w-5 h-5 mr-3 text-current">
+              <use xlink:href="#buildings-icon"></use>
             </svg>
             Manage Buildings
           </RouterLink>
         </li>
         <li>
           <RouterLink
-            class="nav-link"
             to="/staff/customers"
-            active-class="active"
-            exact-active-class="exact-active"
+            class="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-600 hover:text-white"
+            active-class="bg-indigo-600 text-white"
           >
-            <svg class="bi pe-none me-2" width="16" height="16">
-              <use xlink:href="#grid"></use>
+            <svg class="w-5 h-5 mr-3 text-current">
+              <use xlink:href="#customers-icon"></use>
             </svg>
             Manage Customers
           </RouterLink>
         </li>
         <li>
           <RouterLink
-            class="nav-link"
             to="/staff/contracts"
-            active-class="active"
-            exact-active-class="exact-active"
+            class="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-600 hover:text-white"
+            active-class="bg-indigo-600 text-white"
           >
-            <svg class="bi pe-none me-2" width="16" height="16">
-              <use xlink:href="#grid"></use>
+            <svg class="w-5 h-5 mr-3 text-current">
+              <use xlink:href="#contracts-icon"></use>
             </svg>
             Manage Contracts
           </RouterLink>
         </li>
         <li>
           <RouterLink
-            class="nav-link"
             to="/staff/terminated/contracts"
-            active-class="active"
-            exact-active-class="exact-active"
+            class="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-600 hover:text-white"
+            active-class="bg-indigo-600 text-white"
           >
-            <svg class="bi pe-none me-2" width="16" height="16">
-              <use xlink:href="#grid"></use>
+            <svg class="w-5 h-5 mr-3 text-current">
+              <use xlink:href="#terminated-contracts-icon"></use>
             </svg>
             Manage Terminated Contracts
           </RouterLink>
         </li>
         <li>
           <RouterLink
-            class="nav-link"
             to="/staff/payments"
-            active-class="active"
-            exact-active-class="exact-active"
+            class="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-600 hover:text-white"
+            active-class="bg-indigo-600 text-white"
           >
-            <svg class="bi pe-none me-2" width="16" height="16">
-              <use xlink:href="#grid"></use>
+            <svg class="w-5 h-5 mr-3 text-current">
+              <use xlink:href="#payments-icon"></use>
             </svg>
             Manage Payments
           </RouterLink>
         </li>
       </ul>
-      <hr />
-      <div class="dropdown">
-        <a
-          href="#"
-          class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <img
-            src="https://github.com/mdo.png"
-            alt="profile"
-            width="32"
-            height="32"
-            class="rounded-circle me-2"
-          />
-          <strong>{{ username }}</strong>
-        </a>
-        <ul class="dropdown-menu text-small shadow">
-          <li><a class="dropdown-item" href="#">Settings</a></li>
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><hr class="dropdown-divider" /></li>
-          <li><button class="dropdown-item" @click="logout">Logout</button></li>
-        </ul>
-      </div>
     </nav>
+    
+    <hr class="border-gray-300 my-4" />
+    
+    <div class="mt-auto">
+      <div class="flex items-center cursor-pointer text-gray-700 hover:text-indigo-600" @click="toggleDropdown">
+        <img
+          src="https://github.com/mdo.png"
+          alt="profile"
+          class="w-8 h-8 rounded-full mr-3"
+        />
+        <strong class="text-base">{{ username }}</strong>
+        <svg class="w-4 h-4 ml-2 transform" :class="{ 'rotate-180': dropdownOpen }">
+          <use xlink:href="#dropdown-arrow-icon"></use>
+        </svg>
+      </div>
+      
+      <ul v-if="dropdownOpen" class="mt-2 bg-white border border-gray-200 rounded-md shadow-lg text-sm text-gray-700">
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Profile</a></li>
+        <li><hr class="border-gray-200" /></li>
+        <li>
+          <button @click="logout" class="w-full text-left px-4 py-2 hover:bg-gray-100">
+            Logout
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { useStore } from 'vuex';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const store = useStore();
 const username = computed(() => store.getters['auth/user']?.username || 'Staff User');
+const dropdownOpen = ref(false);
+
+const toggleDropdown = () => {
+  dropdownOpen.value = !dropdownOpen.value;
+};
 
 const logout = () => {
   store.dispatch('auth/logout');
@@ -131,13 +133,5 @@ const logout = () => {
 </script>
 
 <style scoped>
-/* Custom styling for active links */
-.nav-link.active {
-  background-color: #007bff;
-  color: white;
-}
-.nav-link.exact-active {
-  background-color: #007bff;
-  color: white;
-}
+/* Add custom styles if needed */
 </style>

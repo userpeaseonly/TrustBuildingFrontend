@@ -1,25 +1,30 @@
 <template>
-    <div class="d-flex">
+    <div class="flex">
         <!-- Sidebar -->
         <StaffSidebar />
 
         <!-- Main Content Area -->
-        <div class="container mt-5" style="flex: 1;">
-            <h2 class="mb-4 text-center">Contract Details</h2>
+        <div class="flex-1 container mx-auto mt-8 p-6 bg-white shadow rounded-lg">
+            <h2 class="text-2xl font-bold text-center mb-8">Contract Details</h2>
 
             <!-- Back button -->
-            <button class="btn btn-secondary mb-4" @click="goBack">Back to Contracts</button>
+            <button class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mb-6" @click="goBack">
+                Back to Contracts
+            </button>
 
-            <div v-if="loadingContract" class="text-center my-5">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
+            <!-- Loading Spinner -->
+            <div v-if="loadingContract" class="flex justify-center items-center my-10">
+                <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
             </div>
 
-            <div v-else-if="errorContract" class="alert alert-danger text-center">{{ errorContract }}</div>
+            <!-- Error Message -->
+            <div v-else-if="errorContract" class="text-red-500 text-center my-5">
+                {{ errorContract }}
+            </div>
 
+            <!-- Contract Details -->
             <div v-else>
-                <!-- Contract Details -->
+                <!-- Contract Details Card -->
                 <ContractDetailsCard :contract="contract" />
 
                 <!-- Down Payment -->
@@ -59,7 +64,7 @@ import PaymentRecords from '@/components/PaymentRecords.vue';
 import PaymentModal from '@/components/PaymentModal.vue';
 import SavePaymentModal from '@/components/SavePaymentModel.vue';
 import PaymentUpdateModal from '@/components/PaymentUpdateModal.vue';
-import apiClient from '@/services/api'; // Import apiClient
+import apiClient from '@/services/api';
 
 const route = useRoute();
 const router = useRouter();
@@ -67,7 +72,7 @@ const { contract, loadingContract, errorContract, fetchContractDetails } = useCo
 
 const showPaymentModal = ref(false);
 const selectedPaymentRecord = ref(null);
-const backendErrors = ref(null);  // Backend errors
+const backendErrors = ref(null);
 
 const showSavePaymentModal = ref(false);
 const showUpdateModal = ref(false);
@@ -94,15 +99,70 @@ const openUpdateLastPaymentModal = (paymentRecord) => {
     updatePaymentType = 'last_payment';
 };
 
-// Close modals
+// Open make payment modal
+const handleOpenPaymentModal = (paymentRecord) => {
+    selectedPaymentRecord.value = paymentRecord;
+    backendErrors.value = null; // Reset errors when opening modal
+    showPaymentModal.value = true;
+};
+
+// Open save payment modal
+const handleSaveOpenPaymentModel = (paymentRecord) => {
+    selectedPaymentRecord.value = paymentRecord;
+    backendErrors.value = null; // Reset errors when opening modal
+    showSavePaymentModal.value = true;
+};
+
+// Close make payment modal
+const closePaymentModal = () => {
+    showPaymentModal.value = false;
+    backendErrors.value = null; // Clear errors
+};
+
+// Close save payment modal
+const closeSavePaymentModal = () => {
+    showSavePaymentModal.value = false;
+    backendErrors.value = null; // Clear errors
+};
+
+// Close update payment modal
 const closeUpdateModal = () => {
     showUpdateModal.value = false;
     backendErrors.value = null;
 };
 
+// Handle payment submission
+const submitPayment = async (paymentData) => {
+    try {
+        await apiClient.post('/contracts/contract/payment-record/make-payment/', paymentData);
+        closePaymentModal();
+        fetchContractDetails(route.params.contract_id); // Refresh contract details after payment
+    } catch (error) {
+        if (error.response && error.response.data) {
+            backendErrors.value = error.response.data;
+        } else {
+            backendErrors.value = { non_field_errors: ['An unexpected error occurred. Please try again.'] };
+        }
+    }
+};
+
+// Handle saving payment
+const savePayment = async (paymentData) => {
+    try {
+        await apiClient.post('/contracts/update-next-payment-record-customer-debt/', paymentData);
+        closeSavePaymentModal();
+        fetchContractDetails(route.params.contract_id); // Refresh contract details after payment
+    } catch (error) {
+        if (error.response && error.response.data) {
+            backendErrors.value = error.response.data;
+        } else {
+            backendErrors.value = { non_field_errors: ['An unexpected error occurred. Please try again.'] };
+        }
+    }
+};
+
 // Submit payment update
 const submitPaymentUpdate = async (paymentData) => {
-    console.log(paymentData);
     try {
         let url = '';
         if (updatePaymentType === 'down_payment') {
@@ -127,3 +187,6 @@ onMounted(() => {
     fetchContractDetails(route.params.contract_id);
 });
 </script>
+
+<style scoped>
+</style>

@@ -1,44 +1,48 @@
 <template>
-    <div class="card h-100 shadow-sm">
+    <div class="bg-white rounded-lg shadow-md p-6 h-full mb-6">
         <div class="card-body">
-            <h5 class="card-title">Contract #{{ contract.id }}</h5>
+            <h5 class="text-xl font-semibold text-indigo-700 mb-4">Contract #{{ contract.id }}</h5>
 
-            <div class="mb-3">
-                <strong>Apartment:</strong>
-                <p class="card-text">
+            <!-- Apartment Details -->
+            <div class="mb-4">
+                <strong class="text-gray-700">Apartment:</strong>
+                <p class="text-gray-600">
                     Apartment {{ contract.apartment.apartment_number }}, Floor {{ contract.apartment.floor_number }}
                 </p>
             </div>
 
-            <div class="mb-3">
-                <strong>Customer:</strong>
-                <p class="card-text">
+            <!-- Customer Details -->
+            <div class="mb-4">
+                <strong class="text-gray-700">Customer:</strong>
+                <p class="text-gray-600">
                     {{ contract.customer.first_name }} {{ contract.customer.last_name }}<br />
-                    <i class="bi bi-telephone"></i> {{ contract.customer.user.phone_number }}
+                    <i class="bi bi-telephone mr-2"></i>{{ contract.customer.user.phone_number }}
                 </p>
             </div>
 
-            <div class="mb-3">
-                <strong>Contract Date:</strong>
-                <p class="card-text">{{ contract.contract_date }}</p>
+            <!-- Contract Date -->
+            <div class="mb-4">
+                <strong class="text-gray-700">Contract Date:</strong>
+                <p class="text-gray-600">{{ contract.contract_date }}</p>
             </div>
 
-            <div class="mb-3">
-                <strong>Price per Square Meter:</strong>
-                <p class="card-text">{{ formatPrice(contract.price_per_square) }} UZS</p>
+            <!-- Price per Square Meter -->
+            <div class="mb-4">
+                <strong class="text-gray-700">Price per Square Meter:</strong>
+                <p class="text-gray-600">{{ formatPrice(contract.price_per_square) }} UZS</p>
             </div>
 
-            <div class="mb-3">
-                <strong>Payment Months:</strong>
-                <p class="card-text">{{ contract.payment_months }} months</p>
+            <!-- Payment Months -->
+            <div class="mb-4">
+                <strong class="text-gray-700">Payment Months:</strong>
+                <p class="text-gray-600">{{ contract.payment_months }} months</p>
             </div>
 
             <!-- Down Payment Section -->
-            <div v-if="contract.down_payment" class="mb-3">
-                <strong>Down Payment:</strong>
-                <p class="card-text">
-                    {{ formatPrice(contract.down_payment.payment_amount) }} UZS (Paid: {{
-                        contract.down_payment.payment_paid ? 'Yes' : 'No' }})<br />
+            <div v-if="contract.down_payment" class="mb-4">
+                <strong class="text-gray-700">Down Payment:</strong>
+                <p class="text-gray-600">
+                    {{ formatPrice(contract.down_payment.payment_amount) }} UZS (Paid: {{ contract.down_payment.payment_paid ? 'Yes' : 'No' }})<br />
                     Method: {{ contract.down_payment.payment_method }}<br />
                     Date: {{ contract.down_payment.payment_date }}<br />
                     Reference: {{ contract.down_payment.payment_reference }}
@@ -46,11 +50,10 @@
             </div>
 
             <!-- Last Payment Section -->
-            <div v-if="contract.last_payment" class="mb-3">
-                <strong>Last Payment:</strong>
-                <p class="card-text">
-                    {{ formatPrice(contract.last_payment.payment_amount) }} UZS (Paid: {{
-                        contract.last_payment.payment_paid ? 'Yes' : 'No' }})<br />
+            <div v-if="contract.last_payment" class="mb-4">
+                <strong class="text-gray-700">Last Payment:</strong>
+                <p class="text-gray-600">
+                    {{ formatPrice(contract.last_payment.payment_amount) }} UZS (Paid: {{ contract.last_payment.payment_paid ? 'Yes' : 'No' }})<br />
                     Method: {{ contract.last_payment.payment_method }}<br />
                     Date: {{ contract.last_payment.payment_date }}<br />
                     Reference: {{ contract.last_payment.payment_reference }}
@@ -58,7 +61,7 @@
             </div>
 
             <!-- Button to go to contract details -->
-            <RouterLink :to="`/${userRole}/contracts/${contract.id}`" class="btn btn-primary mt-3">
+            <RouterLink :to="`/${userRole}/contracts/${contract.id}`" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded mt-6 inline-block">
                 View Details
             </RouterLink>
         </div>
@@ -72,7 +75,6 @@ const store = useStore();  // Access Vuex store
 
 // Computed property to get userRole from Vuex store
 const userRole = store.getters['auth/userRole']
-
 
 // Props definition
 const props = defineProps({
@@ -89,22 +91,8 @@ const formatPrice = (price) => {
 </script>
 
 <style scoped>
-.card {
-    margin-bottom: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.card-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-}
-
-.card-text {
-    font-size: 1rem;
-}
-
-.text-muted {
-    color: #6c757d;
+/* Additional Tailwind-based styling for icons */
+i.bi {
+    color: #4a5568; /* Tailwind's gray-700 */
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="overflow-x-auto p- bg-gray-100">
+    <div class="overflow-x-auto p-4 bg-gray-100">
         <h4 class="text-2xl font-semibold mb-6 text-gray-800">Payment Records</h4>
 
         <div v-if="records.length === 0" class="text-center py-4 bg-yellow-100 text-yellow-800 rounded-lg">
@@ -8,35 +8,36 @@
 
         <!-- Payment Records Table -->
         <table class="table-auto w-full bg-white border-collapse shadow-lg rounded-lg overflow-hidden">
-            <thead class="bg-blue-500 text-lime-800">
+            <thead class="bg-blue-600 text-white">
                 <tr>
-                    <th class="px-4 text-left">Order</th>
-                    <th class="px-4 text-left">Date</th>
-                    <th class="px-4 text-left">Planned Payment</th>
-                    <th class="px-4 text-left">Paid Amount</th>
-                    <th class="px-4 text-left">Customer Debt</th>
-                    <th class="px-4 text-left">Make / Type</th>
-                    <th class="px-4 text-left">Save / Ref</th>
+                    <th class="px-4 py-3 text-left">Order</th>
+                    <th class="px-4 py-3 text-left">Date</th>
+                    <th class="px-4 py-3 text-left">Planned Payment</th>
+                    <th class="px-4 py-3 text-left">Paid Amount</th>
+                    <th class="px-4 py-3 text-left">Customer Debt</th>
+                    <th class="px-4 py-3 text-left">Make / Type</th>
+                    <th class="px-4 py-3 text-left">Save / Ref</th>
                 </tr>
             </thead>
             <tbody>
                 <template v-for="record in records" :key="record.id">
                     <!-- Main Payment Record Row -->
-                    <tr class="border-t bg-gray-50 hover:bg-gray-100" :class="record.is_customer_debt_saved_to_next_month ? 'text-bg-danger' : 'text-bg-success'"> 
-                        <td class="px-4">{{ record.order }}</td>
-                        <td class="px-4">{{ record.date }}</td>
-                        <td class="px-4">{{ formatPrice(record.payment_amount_plan) }} UZS</td>
-                        <td class="px-4">{{ formatPrice(record.payment_amount_paid) }} UZS</td>
-                        <td class="px-4">{{ formatPrice(record.customer_debt) }} UZS</td>
-                        <td class="px-4">
-                            <button disabled @click="openMakePaymentModal(record)"
-                                class="btn btn-info bg-blue-800 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                    <tr class="border-t bg-gray-50 hover:bg-gray-100" 
+                        :class="record.is_customer_debt_saved_to_next_month ? 'text-red-600' : 'text-green-600'">
+                        <td class="px-4 py-3">{{ record.order }}</td>
+                        <td class="px-4 py-3">{{ record.date }}</td>
+                        <td class="px-4 py-3">{{ formatPrice(record.payment_amount_plan) }} UZS</td>
+                        <td class="px-4 py-3">{{ formatPrice(record.payment_amount_paid) }} UZS</td>
+                        <td class="px-4 py-3">{{ formatPrice(record.customer_debt) }} UZS</td>
+                        <td class="px-4 py-3">
+                            <button :disabled="!canMakePayment(record)" @click="openMakePaymentModal(record)"
+                                class="bg-blue-800 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:opacity-50 disabled:cursor-not-allowed">
                                 Make Payment
                             </button>
                         </td>
-                        <td class="px-4">
-                            <button disabled @click="openSavePaymentModal(record)"
-                                class="btn btn-warning bg-blue-800 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                        <td class="px-4 py-3">
+                            <button :disabled="!canSavePayment(record)" @click="openSavePaymentModal(record)"
+                                class="bg-blue-800 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:opacity-50 disabled:cursor-not-allowed">
                                 Save Payment
                             </button>
                         </td>
@@ -44,28 +45,24 @@
 
                     <!-- Payments for the current record -->
                     <tr v-for="payment in record.payments" :key="payment.id" class="bg-white hover:bg-gray-50">
-                        <!-- <td colspan="7" class="px-4 py-3 grid grid-cols-5 gap-6 text-sm pl-8"> -->
-                        <td>{{ record.order }}</td>
-                        <td class="px-4"><span><strong></strong> {{ payment.payment_date }}</span></td>
-                        <td>{{ record.payment_amount_plan }}</td>
-                        <td class="px-4"><span><strong></strong> {{ formatPrice(payment.payment_amount) }} UZS</span></td>
-                        <td class="px-4"><span><strong></strong> {{ formatPrice(payment.payment_record_customer_debt) }} UZS</span></td>
-                        <td class="px-4"><span><strong></strong> {{ payment.payment_method }}</span></td>
-                        <td class="px-4"><span><strong></strong> {{ payment.payment_reference }}</span></td>
-                        <!-- </td> -->
+                        <td class="px-4 py-3">{{ record.order }}</td>
+                        <td class="px-4 py-3">{{ payment.payment_date }}</td>
+                        <td class="px-4 py-3">{{ formatPrice(record.payment_amount_plan) }} UZS</td>
+                        <td class="px-4 py-3">{{ formatPrice(payment.payment_amount) }} UZS</td>
+                        <td class="px-4 py-3">{{ formatPrice(payment.payment_record_customer_debt) }} UZS</td>
+                        <td class="px-4 py-3">{{ payment.payment_method }}</td>
+                        <td class="px-4 py-3">{{ payment.payment_reference }}</td>
                     </tr>
 
                     <!-- Return Payments for the current record -->
-                    <div v-for="returnPayment in record.return_payments" :key="returnPayment.id" class="bg-gray-50 hover:bg-grey-100">
-                        <!-- <td colspan="9" class="px-4 py-3 grid grid-cols-5 gap-6 text-sm pl-8"> -->
-                        <!-- <td>{{ record.id }}</td>
-                        <td class="px-4"><span><strong>Date:</strong> {{ returnPayment.return_date }}</span></td>
-                        <td class="px-4"><span><strong>Amount:</strong> {{ formatPrice(returnPayment.return_amount) }} UZS</span></td>
-                        <td class="px-4"><span><strong>Method:</strong> {{ returnPayment.return_method }}</span></td>
-                        <td class="px-4"><span><strong>Reference:</strong> {{ returnPayment.return_reference }}</span></td>
-                        <td class="px-4"><span><strong>Notes:</strong> {{ returnPayment.return_notes || 'N/A' }}</span></td> -->
-                        <!-- </td> -->
-                    </div>
+                    <tr v-for="returnPayment in record.return_payments" :key="returnPayment.id" class="bg-gray-50 hover:bg-gray-100">
+                        <td class="px-4 py-3">{{ record.order }}</td>
+                        <td class="px-4 py-3">{{ returnPayment.return_date }}</td>
+                        <td class="px-4 py-3">{{ formatPrice(returnPayment.return_amount) }} UZS</td>
+                        <td class="px-4 py-3">{{ returnPayment.return_method }}</td>
+                        <td class="px-4 py-3">{{ returnPayment.return_reference }}</td>
+                        <td class="px-4 py-3" colspan="2">{{ returnPayment.return_notes || 'N/A' }}</td>
+                    </tr>
                 </template>
             </tbody>
         </table>
@@ -73,8 +70,13 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
 const props = defineProps({
-    records: Array
+    records: {
+        type: Array,
+        required: true,
+    }
 });
 
 const emit = defineEmits(['openPaymentModal', 'openSavePaymentModal']);
@@ -91,7 +93,15 @@ const openSavePaymentModal = (record) => {
     emit('openSavePaymentModal', record);
 };
 
+// Determine if Make Payment button should be enabled
+const canMakePayment = (record) => {
+    return record.customer_debt > 0;  // Example condition for enabling make payment
+};
 
+// Determine if Save Payment button should be enabled
+const canSavePayment = (record) => {
+    return !record.is_customer_debt_saved_to_next_month;  // Example condition for enabling save payment
+};
 </script>
 
 <style scoped>
@@ -104,7 +114,7 @@ const openSavePaymentModal = (record) => {
 }
 
 thead th {
-    background-color: #f7fafc;
+    background-color: #1e3a8a; /* Changed to match Tailwind's blue-600 for uniformity */
 }
 
 tbody tr:hover {

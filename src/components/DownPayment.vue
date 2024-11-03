@@ -1,32 +1,36 @@
 <template>
-    <div class="card mb-4 shadow-sm">
-        <div class="card-body">
-            <h5 class="card-title">Down Payment</h5>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>Method</th>
-                        <th>Reference</th>
-                        <th>Payment Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ payment.payment_date }}</td>
-                        <td>{{ formatPrice(payment.payment_amount) }} UZS</td>
-                        <td>{{ payment.payment_method }}</td>
-                        <td>{{ payment.payment_reference }}</td>
-                        <td>
-                            <span v-if="payment.payment_paid" class="badge bg-success">Paid</span>
-                            <span v-else class="badge bg-danger">Unpaid</span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="bg-white shadow-lg rounded-lg mb-6">
+        <div class="p-6">
+            <h5 class="text-xl font-bold text-indigo-700 mb-4">Down Payment</h5>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border-collapse border border-gray-200">
+                    <thead class="bg-indigo-100 text-indigo-800">
+                        <tr>
+                            <th class="border border-gray-200 px-4 py-2 text-left">Date</th>
+                            <th class="border border-gray-200 px-4 py-2 text-left">Amount</th>
+                            <th class="border border-gray-200 px-4 py-2 text-left">Method</th>
+                            <th class="border border-gray-200 px-4 py-2 text-left">Reference</th>
+                            <th class="border border-gray-200 px-4 py-2 text-left">Payment Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-white hover:bg-gray-50">
+                            <td class="border border-gray-200 px-4 py-3">{{ payment.payment_date }}</td>
+                            <td class="border border-gray-200 px-4 py-3">{{ formatPrice(payment.payment_amount) }} UZS</td>
+                            <td class="border border-gray-200 px-4 py-3">{{ payment.payment_method }}</td>
+                            <td class="border border-gray-200 px-4 py-3">{{ payment.payment_reference }}</td>
+                            <td class="border border-gray-200 px-4 py-3">
+                                <span v-if="payment.payment_paid" class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800">Paid</span>
+                                <span v-else class="inline-block px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-800">Unpaid</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <!-- Update Button -->
-            <button class="btn btn-primary mt-3" @click="openUpdateModal">Update Down Payment</button>
+            <button class="mt-6 px-6 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600" @click="openUpdateModal">
+                Update Down Payment
+            </button>
         </div>
     </div>
 </template>
@@ -45,3 +49,7 @@ const openUpdateModal = () => {
     emit('openUpdateModal', props.payment); // Pass the payment object
 };
 </script>
+
+<style scoped>
+/* No additional styles needed as Tailwind CSS is utilized for all styling */
+</style>
