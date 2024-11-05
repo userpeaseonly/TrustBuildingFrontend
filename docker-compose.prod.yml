@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./compose/production/Dockerfile
+    ports:
+      - '5173:5173'
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - ./compose/production/.env.production
+    restart: unless-stopped

@@ -100,7 +100,11 @@
                 </p>
             </div>
 
-            <div class="border-t border-gray-200 pt-6 mt-6">
+            <div class="border-t border-gray-200 pt-6 mt-6 flex space-x-4">
+                <button @click="downloadContract"
+                    class="bg-blue-600 text-white font-semibold px-6 py-2 rounded shadow hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                    Download Contract
+                </button>
                 <button @click="openTerminateContract"
                     class="bg-red-600 text-white font-semibold px-6 py-2 rounded shadow hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-600">
                     Terminate Contract
@@ -214,6 +218,25 @@ const finalizeTermination = async () => {
         }
     } catch (error) {
         terminationErrors.value = error.response?.data || { non_field_errors: ['An unexpected error occurred.'] };
+    }
+};
+
+// Download contract
+const downloadContract = async () => {
+    try {
+        const response = await apiClient.get(`/contracts/generate-contract/${props.contract.id}/`, {
+            responseType: 'blob'
+        });
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `Contract_${props.contract.id}.docx`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (error) {
+        alert('Failed to download contract.');
+        console.error(error);
     }
 };
 
