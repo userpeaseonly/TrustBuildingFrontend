@@ -3,7 +3,7 @@ import store from '../store';
 import router from '../router';
 
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_APP_API_BASE_URL || 'http://0.0.0.0:8020/api',
+  baseURL: import.meta.env.VITE_APP_API_BASE_URL || 'https://backend.trust-building.uz/api',
 });
 
 let isRefreshing = false;
