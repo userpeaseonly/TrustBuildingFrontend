@@ -5,7 +5,7 @@ import router from '../router';
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_APP_API_BASE_URL || 'https://backend.trust-building.uz/api',
 });
-
+console.log(import.meta.env.VITE_APP_API_BASE_URL);
 let isRefreshing = false;
 let failedQueue = [];
 
