@@ -1,13 +1,12 @@
-<!-- src/views/Company.vue -->
 <template>
-  <div class="d-flex">
+  <div class="flex">
     <!-- Sidebar -->
     <CompanySidebar />
 
     <!-- Content -->
-    <div class="content-container">
-      <h1>Company Dashboard</h1>
-      <p>Welcome, Company user!</p>
+    <div class="flex-1 p-8 min-h-screen bg-gray-100">
+      <h1 class="text-3xl font-bold mb-4">Company Dashboard</h1>
+      <p class="text-lg text-gray-700">Welcome, Company user!</p>
     </div>
   </div>
 </template>
@@ -23,8 +22,4 @@ export default {
 </script>
 
 <style scoped>
-.content-container {
-  padding: 20px;
-  flex: 1;
-}
 </style>

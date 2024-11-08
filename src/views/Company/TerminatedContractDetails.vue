@@ -1,23 +1,29 @@
-<!-- src/views/ContractDetails.vue -->
 <template>
-    <div class="d-flex">
+    <div class="flex">
         <!-- Sidebar -->
         <CompanySidebar />
 
         <!-- Main Content Area -->
-        <div class="container mt-5" style="flex: 1;">
-            <h2 class="mb-4 text-center">Contract Details</h2>
+        <div class="flex-1 p-8 min-h-screen bg-gray-100">
+            <h2 class="text-3xl font-semibold text-center mb-8">Contract Details</h2>
 
-            <!-- Back button -->
-            <button class="btn btn-secondary mb-4" @click="goBack">Back to Contracts</button>
+            <!-- Back Button -->
+            <button class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 mb-4" @click="goBack">
+                Back to Contracts
+            </button>
 
-            <div v-if="loadingContract" class="text-center my-5">
-                <div class="spinner-border" role="status">
+            <!-- Loading Spinner -->
+            <div v-if="loadingContract" class="flex justify-center items-center my-20">
+                <div class="w-12 h-12 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"
+                    role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>
 
-            <div v-else-if="errorContract" class="alert alert-danger text-center">{{ errorContract }}</div>
+            <!-- Error Message -->
+            <div v-else-if="errorContract" class="bg-red-500 text-white text-center py-4 rounded mb-6">
+                {{ errorContract }}
+            </div>
 
             <div v-else>
                 <!-- Contract Details -->
@@ -26,110 +32,115 @@
                 <!-- Down Payment -->
                 <DownPayment v-if="contract.downpayment" :payment="contract.contract.downpayment" />
 
-                <h4 class="text-2xl font-semibold mb-6 text-gray-800">Payments of Termination Amount</h4>
-                <table class="table-auto w-full bg-white border-collapse shadow-lg rounded-lg overflow-hidden">
+                <!-- Payments Table -->
+                <h4 class="text-2xl font-semibold mb-6 text-gray-800 mt-10">Payments of Termination Amount</h4>
+                <table class="table-auto w-full bg-white border-collapse shadow-lg rounded-lg overflow-hidden mb-6">
                     <thead class="bg-blue-500 text-lime-800">
                         <tr>
-                            <th class="px-4 text-left">Order</th>
-                            <th class="px-4 text-left">Date</th>
-                            <th class="px-4 text-left">Planned Payment</th>
-                            <th class="px-4 text-left">Paid Amount</th>
-                            <th class="px-4 text-left">Customer Debt</th>
-                            <th class="px-4 text-left">Make / Type</th>
-                            <th class="px-4 text-left">Save / Ref</th>
+                            <th class="px-4 py-2 text-left">Order</th>
+                            <th class="px-4 py-2 text-left">Date</th>
+                            <th class="px-4 py-2 text-left">Planned Payment</th>
+                            <th class="px-4 py-2 text-left">Paid Amount</th>
+                            <th class="px-4 py-2 text-left">Customer Debt</th>
+                            <th class="px-4 py-2 text-left">Make / Type</th>
+                            <th class="px-4 py-2 text-left">Save / Ref</th>
                         </tr>
                     </thead>
-
-                    <!-- Payments for the current record -->
                     <tbody>
-                        <tr v-for="payment in contract.terminated_contract_payments" :key="payment.id" class="bg-white hover:bg-gray-50 ">
-                            <td>{{ payment.id }}</td>
-                            <td class="px-4"><span><strong></strong> {{ payment.payment_date }}</span></td>
-                            <td class="px-4">{{ formatPrice(contract.termination_planned_payment) }}</td>
-                            <td class="px-4"><span><strong></strong> {{ formatPrice(payment.payment_amount) }} UZS</span></td>
-                            <td class="px-4"><span><strong></strong> {{ payment.payment_method }}</span></td>
-                            <td class="px-4"><span><strong></strong> {{ payment.payment_reference }}</span></td>
-                            <td class="px-4"><span><strong></strong> {{ payment.payment_notes }}</span></td>
+                        <tr v-for="payment in contract.terminated_contract_payments" :key="payment.id"
+                            class="hover:bg-gray-50">
+                            <td class="border px-4 py-2">{{ payment.id }}</td>
+                            <td class="border px-4 py-2">{{ payment.payment_date }}</td>
+                            <td class="border px-4 py-2">{{ formatPrice(contract.termination_planned_payment) }}</td>
+                            <td class="border px-4 py-2">{{ formatPrice(payment.payment_amount) }} UZS</td>
+                            <td class="border px-4 py-2">{{ payment.payment_method }}</td>
+                            <td class="border px-4 py-2">{{ payment.payment_reference }}</td>
+                            <td class="border px-4 py-2">{{ payment.payment_notes }}</td>
                         </tr>
                     </tbody>
                 </table>
 
                 <!-- Make Payment Button -->
-                <button @click="openMakePaymentModal" class="btn btn-warning mt-2 mb-4">Make Payment for Terminated Contract</button>
+                <button @click="openMakePaymentModal"
+                    class="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600 mt-4">
+                    Make Payment for Terminated Contract
+                </button>
 
                 <!-- Payment Modal -->
-                <div v-if="showPaymentModal" class="modal fade show d-block" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Make Payment for Terminated Contract</h5>
-                                <button type="button" class="btn-close" @click="closePaymentModal"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form @submit.prevent="submitPayment">
-                                    <div class="mb-3">
-                                        <label class="form-label">Payment Amount</label>
-                                        <input v-model="paymentData.payment_amount" type="number" class="form-control" required />
-                                        <div v-if="backendErrors?.payment_amount" class="text-danger">
-                                            {{ backendErrors.payment_amount[0] }}
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label">Payment Method</label>
-                                        <select v-model="paymentData.payment_method" class="form-control" required>
-                                            <option value="CASH">Cash</option>
-                                            <option value="BANK_TRANSFER">Bank Transfer</option>
-                                            <option value="TERMINAL">Terminal</option>
-                                            <option value="MATERIAL">Material</option>
-                                            <option value="OTHER">Other</option>
-                                        </select>
-                                        <div v-if="backendErrors?.payment_method" class="text-danger">
-                                            {{ backendErrors.payment_method[0] }}
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label">Payment Reference</label>
-                                        <input v-model="paymentData.payment_reference" type="text" class="form-control" />
-                                        <div v-if="backendErrors?.payment_reference" class="text-danger">
-                                            {{ backendErrors.payment_reference[0] }}
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label">Payment Notes</label>
-                                        <textarea v-model="paymentData.payment_notes" class="form-control"></textarea>
-                                        <div v-if="backendErrors?.payment_notes" class="text-danger">
-                                            {{ backendErrors.payment_notes[0] }}
-                                        </div>
-                                    </div>
-
-                                    <!-- Error messages -->
-                                    <div v-if="backendErrors?.non_field_errors" class="alert alert-danger">
-                                        {{ backendErrors.non_field_errors[0] }}
-                                    </div>
-
-                                    <!-- Success message -->
-                                    <div v-if="successMessage" class="alert alert-success">
-                                        {{ successMessage }}
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" @click="closePaymentModal">Cancel</button>
-                                <button type="button" class="btn btn-primary" @click="submitPayment">Submit Payment</button>
-                            </div>
+                <div v-if="showPaymentModal"
+                    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div class="bg-white rounded-lg shadow-lg max-w-lg w-full p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h5 class="text-xl font-bold">Make Payment for Terminated Contract</h5>
+                            <button class="text-gray-500 hover:text-gray-700" @click="closePaymentModal">✖</button>
                         </div>
+                        <form @submit.prevent="submitPayment">
+                            <div class="mb-4">
+                                <label class="block font-semibold mb-2">Payment Amount</label>
+                                <input v-model="paymentData.payment_amount" type="number"
+                                    class="w-full border rounded py-2 px-3" required />
+                                <div v-if="backendErrors?.payment_amount" class="text-red-500 mt-1">
+                                    {{ backendErrors.payment_amount[0] }}
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block font-semibold mb-2">Payment Method</label>
+                                <select v-model="paymentData.payment_method" class="w-full border rounded py-2 px-3"
+                                    required>
+                                    <option value="CASH">Cash</option>
+                                    <option value="BANK_TRANSFER">Bank Transfer</option>
+                                    <option value="TERMINAL">Terminal</option>
+                                    <option value="MATERIAL">Material</option>
+                                    <option value="OTHER">Other</option>
+                                </select>
+                                <div v-if="backendErrors?.payment_method" class="text-red-500 mt-1">
+                                    {{ backendErrors.payment_method[0] }}
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block font-semibold mb-2">Payment Reference</label>
+                                <input v-model="paymentData.payment_reference" type="text"
+                                    class="w-full border rounded py-2 px-3" />
+                                <div v-if="backendErrors?.payment_reference" class="text-red-500 mt-1">
+                                    {{ backendErrors.payment_reference[0] }}
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block font-semibold mb-2">Payment Notes</label>
+                                <textarea v-model="paymentData.payment_notes"
+                                    class="w-full border rounded py-2 px-3"></textarea>
+                                <div v-if="backendErrors?.payment_notes" class="text-red-500 mt-1">
+                                    {{ backendErrors.payment_notes[0] }}
+                                </div>
+                            </div>
+
+                            <!-- Error messages -->
+                            <div v-if="backendErrors?.non_field_errors" class="bg-red-500 text-white p-3 rounded mb-4">
+                                {{ backendErrors.non_field_errors[0] }}
+                            </div>
+
+                            <!-- Success message -->
+                            <div v-if="successMessage" class="bg-green-500 text-white p-3 rounded mb-4">
+                                {{ successMessage }}
+                            </div>
+
+                            <div class="flex justify-end">
+                                <button type="button"
+                                    class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 mr-2"
+                                    @click="closePaymentModal">
+                                    Cancel
+                                </button>
+                                <button type="button" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+                                    @click="submitPayment">
+                                    Submit Payment
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
-                <!-- Payment Records -->
-                <TerminatePaymentRecords :records="contract.contract.payment_records" @openPaymentModal="handleOpenPaymentModal"
-                    @openSavePaymentModal="handleSaveOpenPaymentModel" />
-
-                <!-- Last Payment -->
-                <LastPayment v-if="contract.contract.lastpayment" :payment="contract.contract.lastpayment" />
             </div>
         </div>
     </div>
@@ -139,7 +150,6 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import useContractDetails from '@/composables/useContractDetails';
-import ContractCard from '@/components/ContractCard.vue'; // Include the reusable contract card
 import TerminateContractDetailsCard from '@/components/TerminateContractDetailsCard.vue';
 import DownPayment from '@/components/DownPayment.vue';
 import LastPayment from '@/components/LastPayment.vue';
@@ -226,18 +236,6 @@ h2 {
     font-weight: bold;
 }
 
-.card {
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.alert {
-    font-size: 1rem;
-}
-
-.back-btn {
-    margin-bottom: 20px;
-}
 .table-auto th,
 .table-auto td {
     text-align: left;
