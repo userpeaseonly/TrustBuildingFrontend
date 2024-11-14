@@ -26,8 +26,8 @@
                         <td class="px-4">{{ record.order }}</td>
                         <td class="px-4">{{ record.date }}</td>
                         <td class="px-4">{{ formatPrice(record.payment_amount_plan) }} UZS</td>
-                        <td class="px-4">{{ formatPrice(record.payment_amount_paid) }} UZS</td>
-                        <td class="px-4">{{ formatPrice(record.customer_debt) }} UZS</td>
+                        <td class="px-4"> - </td>
+                        <td class="px-4">{{ formatPrice(record.payment_amount_plan) }} UZS</td>
                         <td class="px-4">
                             <button @click="openMakePaymentModal(record)"
                                 class="btn btn-info bg-blue-800 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600">
@@ -44,9 +44,9 @@
 
                     <!-- Payments for the current record -->
                     <tr v-for="payment in record.payments" :key="payment.id" class="bg-white hover:bg-gray-50">
-                        <td class="px-4">{{ record.order }}</td>
+                        <td class="px-4"> - </td>
                         <td class="px-4"><span><strong></strong> {{ payment.payment_date }}</span></td>
-                        <td class="px-4">{{ formatPrice(record.payment_amount_plan) }}</td>
+                        <td class="px-4"> - </td>
                         <td class="px-4"><span><strong></strong> {{ formatPrice(payment.payment_amount) }} UZS</span></td>
                         <td class="px-4"><span><strong></strong> {{ formatPrice(payment.payment_record_customer_debt) }} UZS</span></td>
                         <td class="px-4"><span><strong></strong> {{ payment.payment_method }}</span></td>
