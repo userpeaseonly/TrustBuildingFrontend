@@ -27,7 +27,7 @@
                         <td class="px-4">{{ record.date }}</td>
                         <td class="px-4">{{ formatPrice(record.payment_amount_plan) }} UZS</td>
                         <td class="px-4"> - </td>
-                        <td class="px-4">{{ formatPrice(record.payment_amount_plan) }} UZS</td>
+                        <td class="px-4">{{ formatPrice(record.customer_debt) }} UZS</td>
                         <td class="px-4">
                             <button @click="openMakePaymentModal(record)"
                                 class="btn btn-info bg-blue-800 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600">
