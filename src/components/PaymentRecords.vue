@@ -30,13 +30,17 @@
                         <td class="px-4">{{ formatPrice(record.customer_debt) }} UZS</td>
                         <td class="px-4">
                             <button @click="openMakePaymentModal(record)"
-                                class="btn btn-info bg-blue-800 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                class="btn bg-green-800 text-white font-semibold px-4 py-2 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-600">
                                 Make Payment
+                            </button>
+                            <button @click="openReturnPaymentModal(record)"
+                                class="btn bg-red-800 text-white font-semibold px-4 py-2 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600">
+                                Return Payment
                             </button>
                         </td>
                         <td class="px-4">
                             <button @click="openSavePaymentModal(record)"
-                                class="btn btn-warning bg-blue-800 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                class="btn btn-warning bg-lime-800 text-white font-semibold px-4 py-2 rounded hover:bg-lime-600 focus:outline-none focus:ring-2 focus:ring-lime-600">
                                 Save Payment
                             </button>
                         </td>
@@ -55,12 +59,13 @@
 
                     <!-- Return Payments for the current record -->
                     <tr v-for="returnPayment in record.return_payments" :key="returnPayment.id" class="bg-yellow-50 hover:bg-yellow-100">
-                        <td class="px-4">{{ record.order }}</td>
-                        <td class="px-4"><span><strong>Date:</strong> {{ returnPayment.return_date }}</span></td>
+                        <td class="px-4"> - </td>
+                        <td class="px-4"><span>{{ returnPayment.return_date }}</span></td>
+                        <td class="px-4"> - </td>
                         <td class="px-4"><span><strong>Returned:</strong> {{ formatPrice(returnPayment.return_amount) }} UZS</span></td>
-                        <td class="px-4"><span><strong>Method:</strong> {{ returnPayment.return_method }}</span></td>
-                        <td class="px-4"><span><strong>Reference:</strong> {{ returnPayment.return_reference }}</span></td>
-                        <td class="px-4" colspan="2"><span><strong>Notes:</strong> {{ returnPayment.return_notes || 'N/A' }}</span></td>
+                        <td class="px-4"><span> {{ returnPayment.customer_debt }} </span></td>
+                        <td class="px-4"><span> {{ returnPayment.return_method }}</span></td>
+                        <td class="px-4"><span> {{ returnPayment.return_reference }}<span><strong>|Notes:</strong> {{ returnPayment.return_notes || 'N/A' }}</span></span></td>
                     </tr>
                 </template>
             </tbody>
@@ -73,7 +78,7 @@ const props = defineProps({
     records: Array
 });
 
-const emit = defineEmits(['openPaymentModal', 'openSavePaymentModal']);
+const emit = defineEmits(['openPaymentModal', 'openSavePaymentModal', 'openReturnPaymentModal']);
 
 // Helper function to format prices
 const formatPrice = (price) => new Intl.NumberFormat('uz-UZ').format(price);
@@ -85,6 +90,10 @@ const openMakePaymentModal = (record) => {
 
 const openSavePaymentModal = (record) => {
     emit('openSavePaymentModal', record);
+};
+
+const openReturnPaymentModal = (record) => {
+    emit('openReturnPaymentModal', record);
 };
 </script>
 
