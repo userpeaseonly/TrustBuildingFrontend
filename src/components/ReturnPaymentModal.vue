@@ -1,122 +1,132 @@
-<!-- src/components/MakePaymentModal.vue -->
 <template>
-    <div class="modal fade" id="makePaymentModal" tabindex="-1" aria-labelledby="makePaymentModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="makePaymentModalLabel">Make Payment</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form @submit.prevent="submitPayment">
-                        <div class="mb-3">
-                            <label for="paymentAmount" class="form-label">Payment Amount</label>
-                            <input v-model="paymentAmount" type="text" id="paymentAmount" class="form-control"
-                                required />
-                        </div>
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md mx-auto">
+            <div class="border-b p-4 flex justify-between items-center">
+                <h5 class="text-xl font-bold text-gray-700">Make Payment</h5>
+                <button type="button" @click="emit('close')" class="text-gray-500 hover:text-gray-700">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <form @submit.prevent="submitForm">
+                    <div class="mb-4">
+                        <label for="paymentAmount" class="block text-sm font-medium text-gray-700 mb-1">Return
+                            Amount</label>
+                        <input v-model="paymentData.return_amount" type="number" id="paymentAmount"
+                            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+                            :class="{ 'border-red-500': errors?.return_amount }" required />
+                        <p v-if="errors?.return_amount" class="text-red-500 text-sm mt-1">{{ errors.return_amount[0]
+                            }}</p>
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="paymentMethod" class="form-label">Payment Method</label>
-                            <select v-model="paymentMethod" id="paymentMethod" class="form-select" required>
-                                <option value="CASH">CASH</option>
-                                <option value="BANK_TRANSFER">BANK_TRANSFER</option>
-                                <option value="TERMINAL">TERMINAL</option>
-                                <option value="MATERIAL">MATERIAL</option>
-                                <option value="OTHER">OTHER</option>
-                            </select>
-                        </div>
+                    <div class="mb-4">
+                        <label for="paymentMethod" class="block text-sm font-medium text-gray-700 mb-1">Return Payment
+                            Method</label>
+                        <select v-model="paymentData.return_method" id="paymentMethod"
+                            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+                            :class="{ 'border-red-500': errors?.return_method }" required>
+                            <option value="CASH">CASH</option>
+                            <option value="BANK_TRANSFER">BANK TRANSFER</option>
+                            <option value="TERMINAL">TERMINAL</option>
+                            <option value="MATERIAL">MATERIAL</option>
+                            <option value="OTHER">OTHER</option>
+                        </select>
+                        <p v-if="errors?.return_method" class="text-red-500 text-sm mt-1">{{ errors.return_method[0]
+                            }}</p>
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="paymentReference" class="form-label">Payment Reference</label>
-                            <input v-model="paymentReference" type="text" id="paymentReference" class="form-control"
-                                required />
-                        </div>
+                    <div class="mb-4">
+                        <label for="paymentReference" class="block text-sm font-medium text-gray-700 mb-1">Return Payment
+                            Reference</label>
+                        <input v-model="paymentData.return_reference" type="text" id="paymentReference"
+                            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+                            :class="{ 'border-red-500': errors?.return_reference }" />
+                        <p v-if="errors?.return_reference" class="text-red-500 text-sm mt-1">{{
+                            errors.return_reference[0] }}</p>
+                    </div>
 
-                        <!-- Payment Date with checkbox -->
-                        <div class="mb-3">
-                            <label for="paymentDate" class="form-label">Payment Date</label>
-                            <input v-model="paymentDate" type="date" id="paymentDate" class="form-control"
-                                :disabled="!allowChangeDate" />
-                            <div class="form-check mt-2">
-                                <input v-model="allowChangeDate" type="checkbox" class="form-check-input"
-                                    id="changeDateCheckbox" />
-                                <label class="form-check-label" for="changeDateCheckbox">
-                                    Change Payment Date (Default: Today's Date)
-                                </label>
+                    <div class="mb-4">
+                        <label for="paymentDate" class="block text-sm font-medium text-gray-700 mb-1">Return Payment
+                            Date</label>
+                        <div class="flex items-center space-x-4">
+                            <input v-model="paymentData.return_date" type="date" id="paymentDate"
+                                class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+                                :disabled="!isDateChangeAllowed" :class="{ 'border-red-500': errors?.return_date }" />
+                            <div class="flex items-center">
+                                <input type="checkbox" v-model="isDateChangeAllowed"
+                                    class="mr-2 focus:ring focus:border-blue-300" />
+                                <span class="text-sm text-gray-600">Allow date change</span>
                             </div>
                         </div>
+                        <p v-if="errors?.return_date" class="text-red-500 text-sm mt-1">{{ errors.return_date[0] }}
+                        </p>
+                    </div>
 
-                        <button type="submit" class="btn btn-success w-100">
+                    <div v-if="errors?.non_field_errors" class="bg-red-100 text-red-600 p-3 rounded mb-4">
+                        {{ errors.non_field_errors[0] }}
+                    </div>
+
+                    <div class="border-t pt-4 flex justify-end space-x-4">
+                        <button type="button" @click="emit('close')"
+                            class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 focus:outline-none focus:ring focus:ring-gray-300">
+                            Cancel
+                        </button>
+                        <button type="submit"
+                            class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300">
                             Submit Payment
                         </button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
-import apiClient from "@/services/api";
+import { ref, watch } from 'vue';
 
+const emit = defineEmits(['close', 'submit']);
 const props = defineProps({
-    paymentRecordId: {
-        type: Number,
+    paymentRecord: {
+        type: Object,
         required: true,
     },
+    errors: {
+        type: Object,
+        default: null,
+    }
 });
 
-const emit = defineEmits(["payment-success", "payment-error"]);
+const paymentData = ref({
+    return_date: new Date().toISOString().substr(0, 10),
+    return_amount: '',
+    return_method: 'CASH',
+    return_reference: '',
+    payment: props.paymentRecord.id,
+});
 
-// State for payment form
-const paymentAmount = ref("");
-const paymentMethod = ref("CASH");
-const paymentReference = ref("");
-const paymentDate = ref(new Date().toISOString().substring(0, 10)); // Default to today
-const allowChangeDate = ref(false);
+const isDateChangeAllowed = ref(false);
 
-// Watch for allowChangeDate changes, reset the date to today if unchecked
-watch(allowChangeDate, (newVal) => {
+watch(isDateChangeAllowed, (newVal) => {
     if (!newVal) {
-        paymentDate.value = new Date().toISOString().substring(0, 10);
+        paymentData.value.payment_date = new Date().toISOString().substr(0, 10);
     }
 });
 
-// Submit payment form
-const submitPayment = async () => {
-    const data = {
-        return_date: paymentDate.value,
-        return_amount: paymentAmount.value,
-        return_method: paymentMethod.value,
-        return_reference: paymentReference.value,
-        payment: props.paymentRecordId,
-    };
-
-    try {
-        await apiClient.post(
-            "/contracts/contract/payment-record/return-payment/",
-            data
-        );
-        emit("payment-success", "Payment made successfully");
-        // Close the modal
-        const modalElement = document.getElementById("makePaymentModal");
-        const modal = bootstrap.Modal.getInstance(modalElement);
-        modal.hide();
-    } catch (error) {
-        emit("payment-error", error.response?.data || "Failed to make payment");
-    }
+const submitForm = () => {
+    emit('submit', paymentData.value);
 };
 </script>
 
 <style scoped>
-.modal-content {
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.form-control {
-    border-radius: 5px;
+.modal-content {
+    max-width: 500px;
+    width: 100%;
 }
 </style>
