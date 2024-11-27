@@ -92,6 +92,7 @@ const openMakePaymentModal = (record) => {
     emit('openPaymentModal', record);
 };
 
+
 const openSavePaymentModal = (record) => {
     emit('openSavePaymentModal', record);
 };
