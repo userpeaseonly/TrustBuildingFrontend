@@ -42,6 +42,17 @@
             <div v-if="activeTab === 'allCustomers'">
                 <div class="flex justify-between items-center mb-4">
                     <h4 class="text-2xl font-bold text-indigo-700">All Customers</h4>
+                    <!-- Search Input Field -->
+                    <div class="mb-4">
+                        <input
+                            type="text"
+                            v-model="searchQuery"
+                            @input="searchCustomers"
+                            placeholder="Search customers..."
+                            class="px-4 py-2 border rounded-lg"
+                        />
+                    </div>
+
                     <button
                         class="inline-flex items-center px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all"
                         @click="openModal"
@@ -144,6 +155,7 @@ const newCustomer = ref({
     passport_copy: null,
 });
 
+const searchQuery = ref('');  // Search query to filter customers
 const backendErrors = ref({});
 const generalError = ref('');
 const showAddCustomerModal = ref(false);
@@ -161,6 +173,12 @@ const customerFields = [
     { label: 'Passport JSHSHR', model: 'passport_jshshr', type: 'text', id: 'passportJshshr', required: true },
 ];
 
+// Method to search customers based on searchQuery
+const searchCustomers = () => {
+    fetchAllCustomers(searchQuery.value);  // Fetch customers based on the search query
+};
+
+
 const handleFileUpload = (event) => {
     const file = event.target.files[0];
     newCustomer.value.passport_copy = file;
@@ -177,9 +195,11 @@ const fetchMyCustomers = async () => {
     }
 };
 
-const fetchAllCustomers = async () => {
+const fetchAllCustomers = async (query = '') => {
     try {
-        const response = await apiClient.get('/users/customer/all/');
+        const response = await apiClient.get('/users/customer/all/', {
+            params: { search: query },
+        });
         allCustomers.value = response.data;
     } catch (error) {
         errorAllCustomers.value = 'Failed to fetch All Customers.';

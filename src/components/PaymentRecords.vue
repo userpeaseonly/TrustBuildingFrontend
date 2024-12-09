@@ -25,22 +25,25 @@
                     <!-- Main Payment Record Row -->
                     <tr class="border-t bg-gray-50 hover:bg-gray-100" :class="record.is_customer_debt_saved_to_next_month ? 'text-red-600' : 'text-green-600'"> 
                         <td class="px-4">{{ record.order }}</td>
-                        <td class="px-4">{{ record.date }}</td>
+                        <td class="px-4">{{ formatDate(record.date) }}</td>
                         <td class="px-4">{{ formatPrice(record.payment_amount_plan) }} UZS</td>
                         <td class="px-4"> - </td>
-                        <td class="px-4">{{ formatPrice(record.customer_debt >= 0 ? record.customer_debt : 0) }} UZS</td>
-                        <td class="px-4">{{ formatPrice(record.customer_debt < 0 ? record.customer_debt * -1 : 0) }} UZS</td>
-                        <td class="px-4">
-                            <button @click="openMakePaymentModal(record)"
-                                class="btn bg-green-800 text-white font-semibold px-4 py-2 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-600">
-                                Pay
-                            </button>
-                            <button @click="openReturnPaymentModal(record)"
-                                class="btn bg-red-800 text-white font-semibold px-4 py-2 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600">
-                                Return
-                            </button>
+                        <td class="px-4">{{ formatPrice(record.customer_additional_payment >= 0 ? record.customer_additional_payment : 0) }} UZS</td>
+                        <td class="px-4">{{ formatPrice(record.customer_additional_payment < 0 ? record.customer_additional_payment * -1 : 0) }} UZS</td>
+                        <td class="">
+                            <div class="inline-flex items-center border border-gray-300 rounded-md overflow-hidden">
+                                <button @click="openMakePaymentModal(record)"
+                                    class="bg-green-800 text-white font-semibold px-4 py-2 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-600">
+                                    Pay
+                                </button>
+                            <div class="border-l border-gray-300"></div>
+                                <button @click="openReturnPaymentModal(record)"
+                                    class="bg-red-800 text-white font-semibold px-4 py-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600">
+                                    Return
+                                </button>
+                            </div>
                         </td>
-                        <td class="px-4">
+                        <td class="pr-4">
                             <button @click="openSavePaymentModal(record)"
                                 class="btn btn-warning bg-lime-800 text-white font-semibold px-4 py-2 rounded hover:bg-lime-600 focus:outline-none focus:ring-2 focus:ring-lime-600">
                                 Save
@@ -69,7 +72,7 @@
                         <td class="px-4"><span> {{ returnPayment.payment_record_customer_debt >= 0 ? returnPayment.payment_record_customer_debt : 0 }} </span></td>
                         <td class="px-4"><span> {{ returnPayment.payment_record_customer_debt < 0 ? returnPayment.payment_record_customer_debt * -1 : 0 }} </span></td>
                         <td class="px-4"><span> {{ returnPayment.return_method }}</span></td>
-                        <td class="px-4"><span> {{ returnPayment.return_reference }}<span><strong>|Notes:</strong> {{ returnPayment.return_notes || 'N/A' }}</span></span></td>
+                        <td class="px-4"><span> {{ returnPayment.return_reference }}</span></td>
                     </tr>
                 </template>
             </tbody>
@@ -92,6 +95,14 @@ const openMakePaymentModal = (record) => {
     emit('openPaymentModal', record);
 };
 
+// Helper function to format dates
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+};
 
 const openSavePaymentModal = (record) => {
     emit('openSavePaymentModal', record);
