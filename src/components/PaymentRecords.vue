@@ -54,7 +54,7 @@
                     <!-- Payments for the current record -->
                     <tr v-for="payment in record.payments" :key="payment.id" class="bg-white hover:bg-gray-50">
                         <td class="px-4"> - </td>
-                        <td class="px-4"><span><strong></strong> {{ payment.payment_date }}</span></td>
+                        <td class="px-4"><span><strong></strong> {{ formatDate(payment.payment_date) }}</span></td>
                         <td class="px-4"> - </td>
                         <td class="px-4"><span><strong></strong> {{ formatPrice(payment.payment_amount) }} UZS</span></td>
                         <td class="px-4"><span><strong></strong> {{ formatPrice(payment.payment_record_customer_debt >= 0 ? payment.payment_record_customer_debt : 0) }} UZS</span></td>
@@ -66,7 +66,7 @@
                     <!-- Return Payments for the current record -->
                     <tr v-for="returnPayment in record.return_payments" :key="returnPayment.id" class="bg-yellow-50 hover:bg-yellow-100">
                         <td class="px-4"> - </td>
-                        <td class="px-4"><span>{{ returnPayment.return_date }}</span></td>
+                        <td class="px-4"><span>{{ formatDate(returnPayment.return_date) }}</span></td>
                         <td class="px-4"> - </td>
                         <td class="px-4"><span><strong>Returned:</strong> {{ formatPrice(returnPayment.return_amount) }} UZS</span></td>
                         <td class="px-4"><span> {{ returnPayment.payment_record_customer_debt >= 0 ? returnPayment.payment_record_customer_debt : 0 }} </span></td>

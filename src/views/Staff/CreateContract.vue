@@ -41,6 +41,12 @@
             <input v-model="contractDate" type="date" class="form-input w-full border border-gray-300 rounded-lg p-2" id="contractDate" />
         </div>
 
+        <!-- Other contract fields -->
+        <div class="mb-6">
+            <label for="paymentRecordContractDate" class="block text-sm font-medium text-gray-700 mb-2">Payment Record Contract Date</label>
+            <input v-model="paymentRecordContractDate" type="date" class="form-input w-full border border-gray-300 rounded-lg p-2" id="paymentRecordContractDate" />
+        </div>
+
         <div class="mb-6">
             <label for="pricePerSquare" class="block text-sm font-medium text-gray-700 mb-2">Price per Square</label>
             <input v-model="pricePerSquare" type="text" class="form-input w-full border border-gray-300 rounded-lg p-2" id="pricePerSquare" />
@@ -78,6 +84,7 @@ const selectedBuilding = ref(null);
 const selectedApartment = ref(null);
 const selectedCustomer = ref(null);
 const contractDate = ref(new Date().toISOString().slice(0, 10)); // Default to today's date
+const paymentRecordContractDate = ref(new Date().toISOString().slice(0, 10)); // Default to today's date
 const pricePerSquare = ref('');
 const paymentMonths = ref(1);
 
@@ -129,6 +136,7 @@ const submitContract = async () => {
         apartment: selectedApartment.value,
         customer: selectedCustomer.value,
         contract_date: contractDate.value,
+        payment_record_contract_date: paymentRecordContractDate.value,
         price_per_square: pricePerSquare.value,
         payment_months: paymentMonths.value,
     };

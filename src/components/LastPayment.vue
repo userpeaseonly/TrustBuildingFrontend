@@ -16,7 +16,7 @@
                 </thead>
                 <tbody>
                     <tr class="bg-white hover:bg-gray-50">
-                        <td class="px-4 py-2 border">{{ payment.payment_date }}</td>
+                        <td class="px-4 py-2 border">{{ formatDate(payment.payment_date) }}</td>
                         <td class="px-4 py-2 border">{{ formatPrice(payment.payment_amount) }} UZS</td>
                         <td class="px-4 py-2 border">{{ payment.payment_method }}</td>
                         <td class="px-4 py-2 border">{{ payment.payment_reference }}</td>
@@ -43,6 +43,16 @@ const props = defineProps({
 const emit = defineEmits(['openUpdateModal']);
 
 const formatPrice = (price) => new Intl.NumberFormat('uz-UZ').format(price);
+
+// Helper function to format dates
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+};
+
 
 // Emit event to parent to open the update modal with payment details
 const openUpdateModal = () => {

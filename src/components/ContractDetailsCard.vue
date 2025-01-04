@@ -9,7 +9,11 @@
             <div class="mb-6">
                 <p class="flex items-center mb-4">
                     <i class="bi bi-calendar-check-fill mr-2 text-gray-500"></i>
-                    <strong>Contract Date:&nbsp;</strong> {{ contract.contract_date }}
+                    <strong>Contract Date:&nbsp;</strong> {{ formatDate(contract.contract_date) }}
+                </p>
+                <p class="flex items-center mb-4">
+                    <i class="bi bi-calendar-check-fill mr-2 text-gray-500"></i>
+                    <strong>Payment Record Contract Date:&nbsp;</strong> {{ formatDate(contract.payment_record_contract_date) }}
                 </p>
                 <p class="flex items-center">
                     <i class="bi bi-check-circle-fill mr-2 text-gray-500"></i>
@@ -166,6 +170,8 @@ const props = defineProps({
     contract: Object
 });
 
+
+
 const showInitTerminationModal = ref(false);
 const showTerminationForm = ref(false);
 const initError = ref(null);
@@ -241,7 +247,17 @@ const downloadContract = async () => {
 };
 
 const formatPrice = (price) => new Intl.NumberFormat('uz-UZ').format(price);
-const formatDate = (dateString) => new Date(dateString).toLocaleDateString('uz-UZ');
+// const formatDate = (dateString) => new Date(dateString).toLocaleDateString('uz-UZ');
+
+// Helper function to format dates
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+};
+
 
 const getStatusBadgeClass = (status) => {
     switch (status.toLowerCase()) {
