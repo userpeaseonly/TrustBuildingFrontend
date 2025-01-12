@@ -33,7 +33,7 @@
                         @selectCustomer="fetchContracts"
                     />
                 </div>
-                
+
                 <!-- No customers found -->
                 <div v-else class="text-center py-6 bg-yellow-100 text-yellow-800 rounded-lg mb-6">
                     No customers found. Please refine your search.

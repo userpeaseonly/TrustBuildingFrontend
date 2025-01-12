@@ -10,7 +10,7 @@
         <table class="table-auto w-full bg-white border-collapse shadow-lg rounded-lg overflow-hidden">
             <thead class="bg-blue-500 text-lime-800">
                 <tr>
-                    <th class="px-4 text-left">Order</th>
+                    <th class="text-left">Order</th>
                     <th class="px-4 text-left">Date</th>
                     <th class="px-4 text-left">Planned Payment</th>
                     <th class="px-4 text-left">Paid Amount</th>
@@ -24,7 +24,7 @@
                 <template v-for="record in records" :key="record.id">
                     <!-- Main Payment Record Row -->
                     <tr class="border-t bg-gray-50 hover:bg-gray-100" :class="record.is_customer_debt_saved_to_next_month ? 'text-red-600' : 'text-green-600'"> 
-                        <td class="px-4">{{ record.order }}</td>
+                        <td class="">{{ record.order }}</td>
                         <td class="px-4">{{ formatDate(record.date) }}</td>
                         <td class="px-4">{{ formatPrice(record.payment_amount_plan) }} UZS</td>
                         <td class="px-4"> - </td>
@@ -53,7 +53,7 @@
 
                     <!-- Payments for the current record -->
                     <tr v-for="payment in record.payments" :key="payment.id" class="bg-white hover:bg-gray-50">
-                        <td class="px-4"> - </td>
+                        <td class="text-center"> <a :href="payment.receipt_url" target="_blank"><img src="@/icons/receipt.png" alt="Receipt IMG" width="28" height="28"></a></td>
                         <td class="px-4"><span><strong></strong> {{ formatDate(payment.payment_date) }}</span></td>
                         <td class="px-4"> - </td>
                         <td class="px-4"><span><strong></strong> {{ formatPrice(payment.payment_amount) }} UZS</span></td>
@@ -65,7 +65,7 @@
 
                     <!-- Return Payments for the current record -->
                     <tr v-for="returnPayment in record.return_payments" :key="returnPayment.id" class="bg-yellow-50 hover:bg-yellow-100">
-                        <td class="px-4"> - </td>
+                        <td class=""> - </td>
                         <td class="px-4"><span>{{ formatDate(returnPayment.return_date) }}</span></td>
                         <td class="px-4"> - </td>
                         <td class="px-4"><span><strong>Returned:</strong> {{ formatPrice(returnPayment.return_amount) }} UZS</span></td>
@@ -81,9 +81,12 @@
 </template>
 
 <script setup>
+import { RouterLink } from 'vue-router';
+
 const props = defineProps({
     records: Array
 });
+
 
 const emit = defineEmits(['openPaymentModal', 'openSavePaymentModal', 'openReturnPaymentModal']);
 
