@@ -1,0 +1,28 @@
+{
+    "message": {
+      "hello": "salom dunyo",
+      "logout": "Chiqish",
+        "settings": "Sozlamalar",
+        "profile": "Profil",
+      "dashboard": "Xodimlar paneli",
+      "buildings": "Bino boshqaruvi",
+      "welcome_staff": "Xush kelibsiz, xodim foydalanuvchi!",
+      "staff_sidebar": "Xodimlar yon paneli",
+        "staff": {
+            "dashboard": "Xodimlar paneli",
+            "buildings": "Bino boshqaruvi",
+            "customers": "Mijozlarni boshqarish",
+            "contracts": "Shartnomalarni boshqarish",
+            "terminated_contracts": "Bekor qilingan shartnomalar",
+            "payments": "To'lovni boshqarish"
+        },
+        "create_new_building": "Yangi bino yaratish",
+        "building_number": "Bino raqami",
+        "address": "Manzil",
+        "block_number": "Blok raqami",
+        "number_of_floors": "Qavatlar soni",
+        "number_of_enterences": "Payyezd soni",
+        "number_of_apartments": "Uylar soni",
+        "cancel": "Bekor qilish"
+    }
+}

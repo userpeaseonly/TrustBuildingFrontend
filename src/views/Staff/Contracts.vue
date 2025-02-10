@@ -2,9 +2,9 @@
     <div class="flex">
         <!-- Sidebar -->
         <StaffSidebar />
-
         <!-- Main Content Area -->
         <div class="flex-1 container mx-auto mt-8 p-6 bg-white shadow rounded-lg">
+            {{ $t('message.dashboard') }}
             <h2 class="text-2xl font-bold text-center mb-8">Manage Contracts</h2>
 
             <div class="flex justify-center mb-6">

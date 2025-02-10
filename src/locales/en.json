@@ -1,0 +1,29 @@
+{
+    "message": {
+      "hello": "hello world",
+        "logout": "Logout",
+        "settings": "Settings",
+        "profile": "Profile",
+      "dashboard": "Staff Dashboard",
+      "buildings": "Manage Buildings",
+      "welcome_staff": "Welcome, staff user!",
+      "go_to_dashboard": "Go to Dashboard",
+      "staff_sidebar": "Staff Sidebar",
+      "staff": {
+        "dashboard": "Staff Dashboard",
+        "buildings": "Manage Buildings",
+        "customers": "Manage Customers",
+        "contracts": "Manage Contracts",
+        "terminated_contracts": "Terminated Contracts",
+        "payments": "Manage Payments"
+      },
+        "create_new_building": "Create New Building",
+        "building_number": "Building Number",
+        "address": "Address",
+        "block_number": "Block Number",
+        "number_of_floors": "Number of Floors",
+        "number_of_enterences": "Number of Enterences",
+        "number_of_apartments": "Number of Apartments",
+        "cancel": "Cancel"
+    }
+}

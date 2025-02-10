@@ -25,6 +25,30 @@
         </div>
 
         <!-- Customer Selection -->
+        <!-- <div v-if="customers.length" class="mb-6">
+            <label for="customer" class="block text-sm font-medium text-gray-700 mb-2">Select Customer</label>
+            <select v-model="selectedCustomer" class="form-select w-full border border-gray-300 rounded-lg p-2">
+                <option value="" disabled>Select a customer</option>
+                <option v-for="customer in customers" :key="customer.id" :value="customer.id">
+                    {{ customer.first_name }} {{ customer.last_name }} - {{ customer.user.phone_number }}
+                </option>
+            </select>
+        </div> -->
+
+
+        <!-- Customer Search and Selection -->
+        <div class="mb-6">
+            <label for="customerSearch" class="block text-sm font-medium text-gray-700 mb-2">Search Customer</label>
+            <input
+                v-model="customerSearch"
+                @input="fetchCustomers"
+                type="text"
+                id="customerSearch"
+                class="form-input w-full border border-gray-300 rounded-lg p-2"
+                placeholder="Search by name or phone number"
+            />
+        </div>
+
         <div v-if="customers.length" class="mb-6">
             <label for="customer" class="block text-sm font-medium text-gray-700 mb-2">Select Customer</label>
             <select v-model="selectedCustomer" class="form-select w-full border border-gray-300 rounded-lg p-2">
@@ -126,7 +150,11 @@ const fetchApartments = async () => {
 };
 
 const fetchCustomers = async () => {
-    const response = await apiClient.get('/users/customer/all/');
+    const response = await apiClient.get('/users/customer/all/', {
+        params: {
+            search: customerSearch.value,
+        },
+    });
     customers.value = response.data;
 };
 

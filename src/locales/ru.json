@@ -1,0 +1,28 @@
+{
+    "message": {
+      "hello": "привет мир",
+      "logout": "Выйти",
+      "settings": "Настройки",
+      "profile": "Профиль",
+      "dashboard": "Панель управления персоналом",
+      "buildings": "Управление зданиями",
+      "welcome_staff": "Добро пожаловать, персонал!",
+      "staff_sidebar": "Боковая панель персонала",
+        "staff": {
+            "dashboard": "Панель управления персоналом",
+            "buildings": "Управление зданиями",
+            "customers": "Управление клиентами",
+            "contracts": "Управление контрактами",
+            "terminated_contracts": "Завершенные контракты",
+            "payments": "Управление платежами"
+        },
+        "create_new_building": "Создать новое здание",
+        "building_number": "Номер здания",
+        "address": "Адрес",
+        "block_number": "Номер блока",
+        "number_of_floors": "Количество этажей",
+        "number_of_enterences": "Количество pod'ezdov",
+        "number_of_apartments": "Количество квартир",
+        "cancel": "Отмена"
+    }
+}

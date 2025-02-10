@@ -3,38 +3,38 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Create New Building</h5>
+                    <h5 class="modal-title">{{ $t('message.create_new_building') }}</h5>
                     <button type="button" class="btn-close" @click="emit('close')"></button>
                 </div>
                 <div class="modal-body">
                     <form @submit.prevent="submitForm">
                         <div class="mb-3">
-                            <label for="buildingNumber" class="form-label">Building Number</label>
+                            <label for="buildingNumber" class="form-label">{{ $t('message.building_number') }}</label>
                             <input v-model="buildingData.building_number" type="text" id="buildingNumber"
                                 class="form-control" required />
                         </div>
                         <div class="mb-3">
-                            <label for="address" class="form-label">Address</label>
+                            <label for="address" class="form-label">{{ $t('message.address') }}</label>
                             <input v-model="buildingData.address" type="text" id="address" class="form-control"
                                 required />
                         </div>
                         <div class="mb-3">
-                            <label for="blockNumber" class="form-label">Block Number</label>
+                            <label for="blockNumber" class="form-label">{{ $t('message.block_number') }}</label>
                             <input v-model="buildingData.block_number" type="text" id="blockNumber" class="form-control"
                                 required />
                         </div>
                         <div class="mb-3">
-                            <label for="floorCount" class="form-label">Number of Floors</label>
+                            <label for="floorCount" class="form-label">{{ $t('message.number_of_floors') }}</label>
                             <input v-model="buildingData.floor_count" type="number" id="floorCount" class="form-control"
                                 required />
                         </div>
                         <div class="mb-3">
-                            <label for="entranceCount" class="form-label">Number of Entrances</label>
+                            <label for="entranceCount" class="form-label">{{ $t('message.number_of_enterences') }}</label>
                             <input v-model="buildingData.entrance_count" type="number" id="entranceCount"
                                 class="form-control" required />
                         </div>
                         <div class="mb-3">
-                            <label for="apartmentCount" class="form-label">Number of Apartments</label>
+                            <label for="apartmentCount" class="form-label">{{ $t('message.number_of_apartments') }}</label>
                             <input v-model="buildingData.apartment_count" type="number" id="apartmentCount"
                                 class="form-control" required />
                         </div>
@@ -45,8 +45,8 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Create Building</button>
-                            <button type="button" class="btn btn-secondary" @click="emit('close')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">{{ $t('message.create_new_building') }}</button>
+                            <button type="button" class="btn btn-secondary" @click="emit('close')">{{ $t('message.cancel') }}</button>
                         </div>
                     </form>
                 </div>
