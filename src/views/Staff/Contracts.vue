@@ -4,12 +4,11 @@
         <StaffSidebar />
         <!-- Main Content Area -->
         <div class="flex-1 container mx-auto mt-8 p-6 bg-white shadow rounded-lg">
-            {{ $t('message.dashboard') }}
-            <h2 class="text-2xl font-bold text-center mb-8">Manage Contracts</h2>
+            <h2 class="text-2xl font-bold text-center mb-8">{{ $t('message.manage_contract') }}</h2>
 
             <div class="flex justify-center mb-6">
                 <RouterLink to="/staff/contracts/create" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Create Contract
+                    {{ $t('message.create_contract') }}
                 </RouterLink>
             </div>
 

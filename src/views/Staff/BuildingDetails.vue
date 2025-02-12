@@ -12,7 +12,7 @@
                     to="/staff/buildings"
                     class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-200 rounded hover:bg-gray-300 transition-all shadow-sm"
                 >
-                    <i class="bi bi-arrow-left mr-2"></i> Back to Buildings
+                    <i class="bi bi-arrow-left mr-2"></i> {{ $t('message.back_to_buildings') }}
                 </RouterLink>
             </div>
 
@@ -30,29 +30,29 @@
             <div v-else>
                 <!-- Header Section -->
                 <div class="mb-8">
-                    <h2 class="text-4xl font-extrabold text-indigo-800 mb-2">Building {{ building.building_number }}</h2>
+                    <h2 class="text-4xl font-extrabold text-indigo-800 mb-2">{{ $t('message.building') }} {{ building.building_number }}</h2>
                     <p class="text-lg text-gray-600">{{ building.address }}</p>
                 </div>
 
                 <!-- Building Details Card -->
                 <div class="bg-white rounded-lg shadow-lg p-8 mb-8 border border-gray-200">
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Building Details</h3>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">{{ $t('message.building_details') }}</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <p><i class="bi bi-geo-alt mr-2"></i> <strong>Block Number:</strong> {{ building.block_number }}</p>
-                            <p><i class="bi bi-layers mr-2"></i> <strong>Floors:</strong> {{ building.floor_count }}</p>
-                            <p><i class="bi bi-door-open mr-2"></i> <strong>Entrances:</strong> {{ building.entrance_count }}</p>
-                            <p><i class="bi bi-building mr-2"></i> <strong>Total Apartments:</strong> {{ building.apartment_count }}</p>
+                            <p><i class="bi bi-geo-alt mr-2"></i> <strong>{{ $t('message.block_number') }}:</strong> {{ building.block_number }}</p>
+                            <p><i class="bi bi-layers mr-2"></i> <strong>{{ $t('message.floors') }}:</strong> {{ building.floor_count }}</p>
+                            <p><i class="bi bi-door-open mr-2"></i> <strong>{{ $t('message.entrances') }}:</strong> {{ building.entrance_count }}</p>
+                            <p><i class="bi bi-building mr-2"></i> <strong>{{ $t('message.total_apartments') }}:</strong> {{ building.apartment_count }}</p>
                         </div>
                         <div>
-                            <p><i class="bi bi-person mr-2"></i> <strong>Staff Assigned:</strong> {{ building.staff_details.first_name }} {{ building.staff_details.last_name }}</p>
-                            <p><i class="bi bi-phone mr-2"></i> <strong>Staff Phone:</strong> {{ building.staff_details.user.phone_number }}</p>
+                            <p><i class="bi bi-person mr-2"></i> <strong>{{ $t('message.staff_assigned') }}:</strong> {{ building.staff_details.first_name }} {{ building.staff_details.last_name }}</p>
+                            <p><i class="bi bi-phone mr-2"></i> <strong>{{ $t('message.staff_phone') }}:</strong> {{ building.staff_details.user.phone_number }}</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Apartments List Header -->
-                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Apartments</h3>
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">{{ $t('message.apartments') }}</h3>
 
                 <!-- Loading Apartments -->
                 <div v-if="loadingApartments" class="flex justify-center items-center h-40">
@@ -68,12 +68,12 @@
                     <table class="min-w-full border-collapse bg-white">
                         <thead>
                             <tr class="bg-indigo-600 text-white text-left">
-                                <th class="px-6 py-4 text-sm font-semibold">Apartment Number</th>
-                                <th class="px-6 py-4 text-sm font-semibold">Floor</th>
-                                <th class="px-6 py-4 text-sm font-semibold">Entrance</th>
-                                <th class="px-6 py-4 text-sm font-semibold">Living Rooms</th>
-                                <th class="px-6 py-4 text-sm font-semibold">Total Area (m²)</th>
-                                <th class="px-6 py-4 text-sm font-semibold">Living Area (m²)</th>
+                                <th class="px-6 py-4 text-sm font-semibold">{{ $t('message.apartment_number') }}</th>
+                                <th class="px-6 py-4 text-sm font-semibold">{{ $t('message.floor') }}</th>
+                                <th class="px-6 py-4 text-sm font-semibold">{{ $t('message.entrance') }}</th>
+                                <th class="px-6 py-4 text-sm font-semibold">{{ $t('message.living_rooms') }}</th>
+                                <th class="px-6 py-4 text-sm font-semibold">{{ $t('message.total_area') }} (m²)</th>
+                                <th class="px-6 py-4 text-sm font-semibold">{{ $t('message.living_area') }} (m²)</th>
                             </tr>
                         </thead>
                         <tbody>

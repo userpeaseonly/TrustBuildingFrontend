@@ -5,7 +5,7 @@
 
         <!-- Main Content Area -->
         <div class="flex-1 p-8 bg-gray-100">
-            <h2 class="text-3xl font-bold text-center mb-8 text-indigo-700">Manage Customers</h2>
+            <h2 class="text-3xl font-bold text-center mb-8 text-indigo-700">{{ $t('message.staff.customers') }}</h2>
 
             <!-- Tab Navigation for My Customers and All Customers -->
             <div class="flex justify-center mb-6">
@@ -14,14 +14,14 @@
                     :class="activeTab === 'myCustomers' ? 'bg-indigo-600 text-white' : 'bg-gray-300 text-gray-800 hover:bg-gray-400'"
                     @click="activeTab = 'myCustomers'"
                 >
-                    My Customers
+                    {{ $t('message.my_customers') }}
                 </button>
                 <button
                     class="px-6 py-2 font-semibold rounded-t-md focus:outline-none ml-2"
                     :class="activeTab === 'allCustomers' ? 'bg-indigo-600 text-white' : 'bg-gray-300 text-gray-800 hover:bg-gray-400'"
                     @click="activeTab = 'allCustomers'"
                 >
-                    All Customers
+                    {{ $t('message.all_customers') }}
                 </button>
             </div>
 
@@ -41,14 +41,14 @@
             <!-- All Customers Section -->
             <div v-if="activeTab === 'allCustomers'">
                 <div class="flex justify-between items-center mb-4">
-                    <h4 class="text-2xl font-bold text-indigo-700">All Customers</h4>
+                    <h4 class="text-2xl font-bold text-indigo-700">{{ $t('message.all_customers') }}</h4>
                     <!-- Search Input Field -->
                     <div class="mb-4">
                         <input
                             type="text"
                             v-model="searchQuery"
                             @input="searchCustomers"
-                            placeholder="Search customers..."
+                            :placeholder="$t('message.search_customers')"
                             class="px-4 py-2 border rounded-lg"
                         />
                     </div>
@@ -57,7 +57,7 @@
                         class="inline-flex items-center px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all"
                         @click="openModal"
                     >
-                        Add Customer
+                        {{ $t('message.add_customer') }}
                     </button>
                 </div>
 
@@ -78,7 +78,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title text-indigo-700">Add New Customer</h5>
+                        <h5 class="modal-title text-indigo-700">{{ $t('message.add_new_customer') }}</h5>
                         <button type="button" class="btn-close" @click="closeModal"></button>
                     </div>
                     <div class="modal-body">
@@ -88,7 +88,7 @@
 
                             <!-- Form Fields -->
                             <div v-for="(field, index) in customerFields" :key="index" class="mb-3">
-                                <label :for="field.id" class="form-label">{{ field.label }}</label>
+                                <label :for="field.id" class="form-label">{{ $t(field.label) }}</label>
                                 <input
                                     :type="field.type"
                                     :id="field.id"
@@ -104,7 +104,7 @@
 
                             <!-- Passport Copy Upload -->
                             <div class="mb-3">
-                                <label for="passportCopy" class="form-label">Passport Copy</label>
+                                <label for="passportCopy" class="form-label">{{ $t('message.passport_copy') }}</label>
                                 <input
                                     @change="handleFileUpload"
                                     type="file"
@@ -117,7 +117,7 @@
                                 </small>
                             </div>
 
-                            <button type="submit" class="btn btn-success w-full">Add Customer</button>
+                            <button type="submit" class="btn btn-success w-full">{{ $t('message.add_customer') }}</button>
                         </form>
                     </div>
                 </div>

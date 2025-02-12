@@ -1,84 +1,84 @@
 <template>
     <div class="bg-white rounded-lg shadow-lg p-6 mb-6 mt-6 border border-gray-200">
-        <h5 class="text-2xl font-bold text-gray-800 mb-6">Add New Apartment</h5>
+        <h5 class="text-2xl font-bold text-gray-800 mb-6">{{ $t('message.add_new_apartment') }}</h5>
 
         <!-- Apartment Form -->
         <form @submit.prevent="submitForm">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                 <!-- Apartment Number -->
                 <div>
-                    <label for="apartmentNumber" class="block text-sm font-medium text-gray-700 mb-2">Apartment Number</label>
+                    <label for="apartmentNumber" class="block text-sm font-medium text-gray-700 mb-2">{{ $t('message.apartment_number') }}</label>
                     <input
                         type="text"
                         id="apartmentNumber"
                         v-model="apartment.apartment_number"
                         class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                        placeholder="Enter apartment number"
+                        :placeholder="$t('message.enter_apartment_number')"
                         required
                     />
                 </div>
 
                 <!-- Floor Number -->
                 <div>
-                    <label for="floorNumber" class="block text-sm font-medium text-gray-700 mb-2">Floor Number</label>
+                    <label for="floorNumber" class="block text-sm font-medium text-gray-700 mb-2">{{ $t('message.floor_number') }}</label>
                     <input
                         type="number"
                         id="floorNumber"
                         v-model="apartment.floor_number"
                         class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                        placeholder="Enter floor number"
+                        :placeholder="$t('message.enter_floor_number')"
                         required
                     />
                 </div>
 
                 <!-- Building Entrance -->
                 <div>
-                    <label for="buildingEntrance" class="block text-sm font-medium text-gray-700 mb-2">Building Entrance</label>
+                    <label for="buildingEntrance" class="block text-sm font-medium text-gray-700 mb-2">{{ $t('message.building_entrance') }}</label>
                     <input
                         type="number"
                         id="buildingEntrance"
                         v-model="apartment.building_entrance"
                         class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                        placeholder="Enter entrance number"
+                        :placeholder="$t('message.enter_entrance_number')"
                         required
                     />
                 </div>
 
                 <!-- Living Room Count -->
                 <div>
-                    <label for="livingRoomCount" class="block text-sm font-medium text-gray-700 mb-2">Living Room Count</label>
+                    <label for="livingRoomCount" class="block text-sm font-medium text-gray-700 mb-2">{{ $t('message.living_room_count') }}</label>
                     <input
                         type="number"
                         id="livingRoomCount"
                         v-model="apartment.living_room_count"
                         class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                        placeholder="Enter living room count"
+                        :placeholder="$t('message.enter_living_room_count')"
                         required
                     />
                 </div>
 
                 <!-- Total Area -->
                 <div>
-                    <label for="totalArea" class="block text-sm font-medium text-gray-700 mb-2">Total Area (m²)</label>
+                    <label for="totalArea" class="block text-sm font-medium text-gray-700 mb-2">{{ $t('message.total_area') }} (m²)</label>
                     <input
                         type="number"
                         id="totalArea"
                         v-model="apartment.total_area"
                         class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                        placeholder="Enter total area"
+                        :placeholder="$t('message.enter_total_area')"
                         required
                     />
                 </div>
 
                 <!-- Living Area -->
                 <div>
-                    <label for="livingArea" class="block text-sm font-medium text-gray-700 mb-2">Living Area (m²)</label>
+                    <label for="livingArea" class="block text-sm font-medium text-gray-700 mb-2">{{ $t('message.living_area') }} (m²)</label>
                     <input
                         type="number"
                         id="livingArea"
                         v-model="apartment.living_area"
                         class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                        placeholder="Enter living area"
+                        :placeholder="$t('message.enter_living_area')"
                         required
                     />
                 </div>
@@ -89,7 +89,7 @@
                 type="submit"
                 class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all"
             >
-                Add Apartment
+                {{ $t('message.add_apartment') }}
             </button>
         </form>
 
