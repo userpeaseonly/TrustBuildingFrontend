@@ -1,23 +1,23 @@
 <template>
     <div class="overflow-x-auto p- bg-gray-100">
-        <h4 class="text-2xl font-semibold mb-6 text-gray-800">Payment Records</h4>
+        <h4 class="text-2xl font-semibold mb-6 text-gray-800">{{ $t('message.payment_records') }}</h4>
 
         <div v-if="records.length === 0" class="text-center py-4 bg-yellow-100 text-yellow-800 rounded-lg">
-            No payment records found.
+            {{ $t('message.no_payment_records_found') }}
         </div>
 
         <!-- Payment Records Table -->
         <table class="table-auto w-full bg-white border-collapse shadow-lg rounded-lg overflow-hidden">
             <thead class="bg-blue-500 text-lime-800">
                 <tr>
-                    <th class="text-left">Order</th>
-                    <th class="px-4 text-left">Date</th>
-                    <th class="px-4 text-left">Planned Payment</th>
-                    <th class="px-4 text-left">Paid Amount</th>
-                    <th class="px-4 text-left">Debt</th>
-                    <th class="px-4 text-left">excess</th>
-                    <th class="px-4 text-left">Make / Type</th>
-                    <th class="px-4 text-left">Save / Ref</th>
+                    <th class="text-left">{{ $t('message.order') }}</th>
+                    <th class="px-4 text-left">{{ $t('message.date') }}</th>
+                    <th class="px-4 text-left">{{ $t('message.planned_payment') }}</th>
+                    <th class="px-4 text-left">{{ $t('message.paid_amount') }}</th>
+                    <th class="px-4 text-left">{{ $t('message.debt') }}</th>
+                    <th class="px-4 text-left">{{ $t('message.excess') }}</th>
+                    <th class="px-4 text-left">{{ $t('message.make_type') }}</th>
+                    <th class="px-4 text-left">{{ $t('message.save_ref') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,19 +34,19 @@
                             <div class="inline-flex items-center border border-gray-300 rounded-md overflow-hidden">
                                 <button @click="openMakePaymentModal(record)"
                                     class="bg-green-800 text-white font-semibold px-4 py-2 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-600">
-                                    Pay
+                                    {{ $t('message.pay') }}
                                 </button>
                             <div class="border-l border-gray-300"></div>
                                 <button @click="openReturnPaymentModal(record)"
                                     class="bg-red-800 text-white font-semibold px-4 py-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600">
-                                    Return
+                                    {{ $t('message.return') }}
                                 </button>
                             </div>
                         </td>
                         <td class="pr-4">
                             <button @click="openSavePaymentModal(record)"
                                 class="btn btn-warning bg-lime-800 text-white font-semibold px-4 py-2 rounded hover:bg-lime-600 focus:outline-none focus:ring-2 focus:ring-lime-600">
-                                Save
+                                {{ $t('message.save') }}
                             </button>
                         </td>
                     </tr>
@@ -68,7 +68,7 @@
                         <td class=""> - </td>
                         <td class="px-4"><span>{{ formatDate(returnPayment.return_date) }}</span></td>
                         <td class="px-4"> - </td>
-                        <td class="px-4"><span><strong>Returned:</strong> {{ formatPrice(returnPayment.return_amount) }} UZS</span></td>
+                        <td class="px-4"><span><strong>{{ $t('message.returned') }}:</strong> {{ formatPrice(returnPayment.return_amount) }} UZS</span></td>
                         <td class="px-4"><span> {{ returnPayment.payment_record_customer_debt >= 0 ? returnPayment.payment_record_customer_debt : 0 }} </span></td>
                         <td class="px-4"><span> {{ returnPayment.payment_record_customer_debt < 0 ? returnPayment.payment_record_customer_debt * -1 : 0 }} </span></td>
                         <td class="px-4"><span> {{ returnPayment.return_method }}</span></td>

@@ -10,7 +10,7 @@
             <!-- Phone number with tooltip for better UX -->
             <p class="text-gray-600 flex items-center">
                 <i class="bi bi-telephone-fill mr-2 text-gray-500"></i>
-                <strong>Phone:</strong> {{ customer.user.phone_number }}
+                <strong>{{ $t('message.phone') }}: </strong> {{ customer.user.phone_number }}
             </p>
         </div>
     </div>

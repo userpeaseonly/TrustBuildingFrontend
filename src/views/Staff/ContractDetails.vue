@@ -5,11 +5,11 @@
 
         <!-- Main Content Area -->
         <div class="flex-1 container mx-auto mt-8 p-6 bg-white shadow rounded-lg">
-            <h2 class="text-2xl font-bold text-center mb-8">Contract Details</h2>
+            <h2 class="text-2xl font-bold text-center mb-8">{{ $t('message.contract_details') }}</h2>
 
             <!-- Back button -->
             <button class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mb-6" @click="goBack">
-                Back to Contracts
+                {{ $t('message.back_to_contracts') }}
             </button>
 
             <!-- Loading Spinner -->

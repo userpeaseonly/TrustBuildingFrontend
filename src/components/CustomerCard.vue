@@ -11,11 +11,11 @@
             <div class="mb-3">
                 <p class="text-gray-600 flex items-center">
                     <i class="bi bi-telephone-fill mr-2 text-gray-500"></i>
-                    <strong>Phone:</strong>&nbsp;{{ customer.user.phone_number }}
+                    <strong>{{ $t('message.phone') }}:</strong>&nbsp;{{ customer.user.phone_number }}
                 </p>
                 <p v-if="customer.phone_number2" class="text-gray-600 flex items-center">
                     <i class="bi bi-telephone-fill mr-2 text-gray-500"></i>
-                    <strong>Phone 2:</strong>&nbsp;{{ customer.phone_number2 }}
+                    <strong>{{ $t('message.phone_2') }}:</strong>&nbsp;{{ customer.phone_number2 }}
                 </p>
             </div>
 
@@ -23,11 +23,11 @@
             <div class="mb-3">
                 <p class="text-gray-600 flex items-center">
                     <i class="bi bi-file-earmark-text-fill mr-2 text-gray-500"></i>
-                    <strong>Passport:</strong>&nbsp;{{ customer.passport_series }}
+                    <strong>{{ $t('message.passport') }}:</strong>&nbsp;{{ customer.passport_series }}
                 </p>
                 <p class="text-gray-600 flex items-center">
                     <i class="bi bi-calendar-fill mr-2 text-gray-500"></i>
-                    <strong>Issued At:</strong>&nbsp;{{ customer.passport_place_issuance }} on {{
+                    <strong>{{ $t('message.issued_at') }}:</strong>&nbsp;{{ customer.passport_place_issuance }} on {{
                         formatDate(customer.passport_date_issuance) }}
                 </p>
             </div>
@@ -36,11 +36,11 @@
             <div class="mb-3">
                 <p class="text-gray-600 flex items-center">
                     <i class="bi bi-image-fill mr-2 text-gray-500"></i>
-                    <strong>Passport Copy:</strong>
+                    <strong>{{ $t('message.passport_copy') }}:</strong>
                     <a :href="customer.passport_copy" target="_blank" rel="noopener noreferrer"
                         class="ml-2 text-indigo-600 hover:underline" data-bs-toggle="tooltip"
-                        title="View passport copy">
-                        View
+                        :title="$t('message.view_passport_copy')">
+                        {{ $t('message.view') }}
                     </a>
                 </p>
             </div>
@@ -50,11 +50,11 @@
                 <button @click="showJshshr = !showJshshr"
                     class="text-indigo-600 border border-indigo-600 px-4 py-2 rounded hover:bg-indigo-600 hover:text-white transition">
                     <i :class="showJshshr ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
-                    {{ showJshshr ? 'Hide Passport JSHSHR' : 'Show Passport JSHSHR' }}
+                    {{ showJshshr ? $t('message.hide_passport_jshshr') : $t('message.show_passport_jshshr') }}
                 </button>
                 <p v-if="showJshshr" class="mt-3 text-gray-600 flex items-center">
                     <i class="bi bi-file-lock-fill mr-2 text-gray-500"></i>
-                    <strong>Passport JSHSHR:</strong>&nbsp;{{ customer.passport_jshshr }}
+                    <strong>{{ $t('message.passport_jshshr') }}:</strong>&nbsp;{{ customer.passport_jshshr }}
                 </p>
             </div>
         </div>
