@@ -159,6 +159,17 @@
         "return_payment_method": "Return Payment Method",
         "return_payment_reference": "Return Payment Reference",
         "return_payment_date": "Return Payment Date",
-        "allow_date_change": "Allow date change"
+        "allow_date_change": "Allow date change",
+        "payment_date": "Payment Date",
+        "loading": "Loading...",
+        "contract_number": "Contract #{id}",
+        "termination_fine": "Termination Fine",
+        "termination_fine_paid": "Termination Fine Paid",
+        "price_per_square_meter": "Price per Square Meter",
+        "termination_details": "Termination Details",
+        "termination_planned_payment": "Termination Planned Payment",
+        "termination_date": "Termination Date",
+        "save_payment": "Save Payment",
+        "na": "N/A"
     }
 }

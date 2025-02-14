@@ -1,4 +1,3 @@
-<!-- src/components/CustomerCard.vue -->
 <template>
     <div class="card h-100 shadow-sm shadow-sm mb-4" @click="selectCustomer">
         <div class="card-body">
@@ -12,11 +11,11 @@
             <div class="mb-3">
                 <p class="card-text d-flex align-items-center">
                     <i class="bi bi-telephone-fill me-2"></i>
-                    <strong>Phone:&nbsp;</strong> {{ customer.user.phone_number }}
+                    <strong>{{ $t('message.phone') }}:&nbsp;</strong> {{ customer.user.phone_number }}
                 </p>
                 <p v-if="customer.phone_number2" class="card-text d-flex align-items-center">
                     <i class="bi bi-telephone-fill me-2"></i>
-                    <strong>Phone 2:</strong> {{ customer.phone_number2 }}
+                    <strong>{{ $t('message.phone_2') }}:</strong> {{ customer.phone_number2 }}
                 </p>
             </div>
 
@@ -24,11 +23,11 @@
             <div class="mb-3">
                 <p class="card-text d-flex align-items-center">
                     <i class="bi bi-file-earmark-text-fill me-2"></i>
-                    <strong>Passport:&nbsp;</strong> {{ customer.passport_series }}
+                    <strong>{{ $t('message.passport') }}:&nbsp;</strong> {{ customer.passport_series }}
                 </p>
                 <p class="card-text d-flex align-items-center">
                     <i class="bi bi-calendar-fill me-2"></i>
-                    <strong>Issued At:&nbsp;</strong> {{ customer.passport_place_issuance }} on {{
+                    <strong>{{ $t('message.issued_at') }}:&nbsp;</strong> {{ customer.passport_place_issuance }} on {{
                         formatDate(customer.passport_date_issuance) }}
                 </p>
             </div>
@@ -37,10 +36,10 @@
             <div class="mb-3">
                 <p class="card-text d-flex align-items-center">
                     <i class="bi bi-image-fill me-2"></i>
-                    <strong>Passport Copy:</strong>
+                    <strong>{{ $t('message.passport_copy') }}:</strong>
                     <a :href="customer.passport_copy" target="_blank" rel="noopener noreferrer"
-                        class="ms-2 text-decoration-none" data-bs-toggle="tooltip" title="View passport copy">
-                        View
+                        class="ms-2 text-decoration-none" data-bs-toggle="tooltip" :title="$t('message.view_passport_copy')">
+                        {{ $t('message.view') }}
                     </a>
                 </p>
             </div>
@@ -49,11 +48,11 @@
             <div class="">
                 <button @click="showJshshr = !showJshshr" class="btn btn-sm btn-outline-primary">
                     <i :class="showJshshr ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
-                    {{ showJshshr ? 'Hide Passport JSHSHR' : 'Show Passport JSHSHR' }}
+                    {{ showJshshr ? $t('message.hide_passport_jshshr') : $t('message.show_passport_jshshr') }}
                 </button>
                 <p v-if="showJshshr" class="mt-2 d-flex align-items-center">
                     <i class="bi bi-file-lock-fill me-2"></i>
-                    <strong>Passport JSHSHR: </strong> {{ customer.passport_jshshr }}
+                    <strong>{{ $t('message.passport_jshshr') }}: </strong> {{ customer.passport_jshshr }}
                 </p>
             </div>
         </div>

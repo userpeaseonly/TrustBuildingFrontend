@@ -152,6 +152,17 @@
         "return_payment_method": "Способ возврата платежа",
         "return_payment_reference": "Ссылка на возврат платежа",
         "return_payment_date": "Дата возврата платежа",
-        "allow_date_change": "Разрешить изменение даты"
+        "allow_date_change": "Разрешить изменение даты",
+        "payment_date": "Дата платежа",
+        "loading": "Загрузка...",
+        "contract_number": "Контракт #{id}",
+        "termination_fine": "Штраф за расторжение",
+        "termination_fine_paid": "Штраф за расторжение оплачен",
+        "price_per_square_meter": "Цена за квадратный метр",
+        "termination_details": "Детали расторжения",
+        "termination_planned_payment": "Планируемый платеж за расторжение",
+        "termination_date": "Дата расторжения",
+        "save_payment": "Сохранить платеж",
+        "na": "Н/Д"
     }
 }

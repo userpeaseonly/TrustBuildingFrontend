@@ -40,7 +40,7 @@
           <!-- Make Payment Modal -->
           <PaymentModal v-if="showPaymentModal" :paymentRecord="selectedPaymentRecord" @close="closePaymentModal" @submit="submitPayment" :errors="backendErrors" />
         </div>
-      </div>
+      </div> 
     </div>
   </template>
   

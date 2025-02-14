@@ -157,6 +157,17 @@
         "return_payment_method": "Qaytarish to'lov usuli",
         "return_payment_reference": "Qaytarish to'lov manbasi",
         "return_payment_date": "Qaytarish to'lov sanasi",
-        "allow_date_change": "Sana o'zgartirishga ruxsat berish"
+        "allow_date_change": "Sana o'zgartirishga ruxsat berish",
+        "payment_date": "To'lov sanasi",
+        "loading": "Yuklanmoqda...",
+        "contract_number": "Shartnoma #{id}",
+        "termination_fine": "Bekor qilish jarimasi",
+        "termination_fine_paid": "Bekor qilish jarimasi to'langan",
+        "price_per_square_meter": "Kvadrat metr narxi",
+        "termination_details": "Bekor qilish tafsilotlari",
+        "termination_planned_payment": "Bekor qilish rejalashtirilgan to'lov",
+        "termination_date": "Bekor qilish sanasi",
+        "save_payment": "To'lovni saqlash",
+        "na": "Mavjud emas"
     }
 }

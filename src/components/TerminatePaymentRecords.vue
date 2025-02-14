@@ -1,22 +1,22 @@
 <template>
     <div class="overflow-x-auto p-4 bg-gray-100">
-        <h4 class="text-2xl font-semibold mb-6 text-gray-800">Payment Records</h4>
+        <h4 class="text-2xl font-semibold mb-6 text-gray-800">{{ $t('message.payment_records') }}</h4>
 
         <div v-if="records.length === 0" class="text-center py-4 bg-yellow-100 text-yellow-800 rounded-lg">
-            No payment records found.
+            {{ $t('message.no_payment_records_found') }}
         </div>
 
         <!-- Payment Records Table -->
         <table class="table-auto w-full bg-white border-collapse shadow-lg rounded-lg overflow-hidden">
             <thead class="bg-blue-600 text-white">
                 <tr>
-                    <th class="px-4 py-3 text-left">Order</th>
-                    <th class="px-4 py-3 text-left">Date</th>
-                    <th class="px-4 py-3 text-left">Planned Payment</th>
-                    <th class="px-4 py-3 text-left">Paid Amount</th>
-                    <th class="px-4 py-3 text-left">Customer Debt</th>
-                    <th class="px-4 py-3 text-left">Make / Type</th>
-                    <th class="px-4 py-3 text-left">Save / Ref</th>
+                    <th class="px-4 py-3 text-left">{{ $t('message.order') }}</th>
+                    <th class="px-4 py-3 text-left">{{ $t('message.date') }}</th>
+                    <th class="px-4 py-3 text-left">{{ $t('message.planned_payment') }}</th>
+                    <th class="px-4 py-3 text-left">{{ $t('message.paid_amount') }}</th>
+                    <th class="px-4 py-3 text-left">{{ $t('message.customer_debt') }}</th>
+                    <th class="px-4 py-3 text-left">{{ $t('message.make_type') }}</th>
+                    <th class="px-4 py-3 text-left">{{ $t('message.save_ref') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,13 +32,13 @@
                         <td class="px-4 py-3">
                             <button :disabled="!canMakePayment(record)" @click="openMakePaymentModal(record)"
                                 class="bg-blue-800 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:opacity-50 disabled:cursor-not-allowed">
-                                Make Payment
+                                {{ $t('message.make_payment') }}
                             </button>
                         </td>
                         <td class="px-4 py-3">
                             <button :disabled="!canSavePayment(record)" @click="openSavePaymentModal(record)"
                                 class="bg-blue-800 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 disabled:opacity-50 disabled:cursor-not-allowed">
-                                Save Payment
+                                {{ $t('message.save_payment') }}
                             </button>
                         </td>
                     </tr>
@@ -61,7 +61,7 @@
                         <td class="px-4 py-3">{{ formatPrice(returnPayment.return_amount) }} UZS</td>
                         <td class="px-4 py-3">{{ returnPayment.return_method }}</td>
                         <td class="px-4 py-3">{{ returnPayment.return_reference }}</td>
-                        <td class="px-4 py-3" colspan="2">{{ returnPayment.return_notes || 'N/A' }}</td>
+                        <td class="px-4 py-3" colspan="2">{{ returnPayment.return_notes || $t('message.na') }}</td>
                     </tr>
                 </template>
             </tbody>
