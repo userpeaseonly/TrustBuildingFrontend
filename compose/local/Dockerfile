@@ -1,5 +1,5 @@
 # Dockerfile for local development
-FROM node:16
+FROM node:16-bullseye
 
 # Create and set working directory
 WORKDIR /app

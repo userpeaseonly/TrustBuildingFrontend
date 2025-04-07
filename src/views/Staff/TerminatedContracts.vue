@@ -5,7 +5,7 @@
         
         <!-- Main Content Area -->
         <div class="container mx-auto mt-10 p-6 bg-white shadow-md rounded-lg w-full max-w-5xl">
-            <h2 class="text-3xl font-bold mb-6 text-center">Manage Terminated Contracts</h2>
+            <h2 class="text-3xl font-bold mb-6 text-center">{{ $t('message.manage_terminated_contracts') }}</h2>
 
             <!-- Loading Spinner -->
             <div v-if="loadingContracts" class="flex justify-center items-center my-10">

@@ -1,12 +1,12 @@
 <template>
     <div class="container mx-auto mt-10 p-6 bg-white shadow-md rounded-lg max-w-3xl">
-        <h2 class="text-3xl font-bold mb-6 text-center">Create Contract</h2>
+        <h2 class="text-3xl font-bold mb-6 text-center">{{ $t('message.create_contract') }}</h2>
 
         <!-- Building Selection -->
         <div class="mb-6">
-            <label for="building" class="block text-sm font-medium text-gray-700 mb-2">Select Building</label>
+            <label for="building" class="block text-sm font-medium text-gray-700 mb-2">{{ $t('message.select_building') }}</label>
             <select v-model="selectedBuilding" @change="fetchApartments" class="form-select w-full border border-gray-300 rounded-lg p-2">
-                <option value="" disabled>Select a building</option>
+                <option value="" disabled>{{ $t('message.select_a_building') }}</option>
                 <option v-for="building in buildings" :key="building.id" :value="building.id">
                     {{ building.building_number }} - {{ building.address }}
                 </option>
@@ -15,20 +15,32 @@
 
         <!-- Apartment Selection -->
         <div v-if="apartments.length" class="mb-6">
-            <label for="apartment" class="block text-sm font-medium text-gray-700 mb-2">Select Apartment</label>
+            <label for="apartment" class="block text-sm font-medium text-gray-700 mb-2">{{ $t('message.select_apartment') }}</label>
             <select v-model="selectedApartment" class="form-select w-full border border-gray-300 rounded-lg p-2">
-                <option value="" disabled>Select an apartment</option>
+                <option value="" disabled>{{ $t('message.select_an_apartment') }}</option>
                 <option v-for="apartment in apartments" :key="apartment.id" :value="apartment.id">
-                    Apartment {{ apartment.apartment_number }} - Floor {{ apartment.floor_number }}
+                    {{ $t('message.apartment') }} {{ apartment.apartment_number }} - {{ $t('message.floor') }} {{ apartment.floor_number }}
                 </option>
             </select>
         </div>
 
-        <!-- Customer Selection -->
+        <!-- Customer Search and Selection -->
+        <div class="mb-6">
+            <label for="customerSearch" class="block text-sm font-medium text-gray-700 mb-2">{{ $t('message.search_customer') }}</label>
+            <input
+                v-model="customerSearch"
+                @input="fetchCustomers"
+                type="text"
+                id="customerSearch"
+                class="form-input w-full border border-gray-300 rounded-lg p-2"
+                :placeholder="$t('message.search_by_name_or_phone')"
+            />
+        </div>
+
         <div v-if="customers.length" class="mb-6">
-            <label for="customer" class="block text-sm font-medium text-gray-700 mb-2">Select Customer</label>
+            <label for="customer" class="block text-sm font-medium text-gray-700 mb-2">{{ $t('message.select_customer') }}</label>
             <select v-model="selectedCustomer" class="form-select w-full border border-gray-300 rounded-lg p-2">
-                <option value="" disabled>Select a customer</option>
+                <option value="" disabled>{{ $t('message.select_a_customer') }}</option>
                 <option v-for="customer in customers" :key="customer.id" :value="customer.id">
                     {{ customer.first_name }} {{ customer.last_name }} - {{ customer.user.phone_number }}
                 </option>
@@ -37,33 +49,38 @@
 
         <!-- Other contract fields -->
         <div class="mb-6">
-            <label for="contractDate" class="block text-sm font-medium text-gray-700 mb-2">Contract Date</label>
+            <label for="contractDate" class="block text-sm font-medium text-gray-700 mb-2">{{ $t('message.contract_date') }}</label>
             <input v-model="contractDate" type="date" class="form-input w-full border border-gray-300 rounded-lg p-2" id="contractDate" />
         </div>
 
         <div class="mb-6">
-            <label for="pricePerSquare" class="block text-sm font-medium text-gray-700 mb-2">Price per Square</label>
+            <label for="paymentRecordContractDate" class="block text-sm font-medium text-gray-700 mb-2">{{ $t('message.payment_record_contract_date') }}</label>
+            <input v-model="paymentRecordContractDate" type="date" class="form-input w-full border border-gray-300 rounded-lg p-2" id="paymentRecordContractDate" />
+        </div>
+
+        <div class="mb-6">
+            <label for="pricePerSquare" class="block text-sm font-medium text-gray-700 mb-2">{{ $t('message.price_per_square') }}</label>
             <input v-model="pricePerSquare" type="text" class="form-input w-full border border-gray-300 rounded-lg p-2" id="pricePerSquare" />
         </div>
 
         <div class="mb-6">
-            <label for="paymentMonths" class="block text-sm font-medium text-gray-700 mb-2">Payment Months</label>
+            <label for="paymentMonths" class="block text-sm font-medium text-gray-700 mb-2">{{ $t('message.payment_months') }}</label>
             <input v-model="paymentMonths" type="number" class="form-input w-full border border-gray-300 rounded-lg p-2" id="paymentMonths" />
         </div>
 
         <!-- Down Payment Section -->
         <div class="mb-6">
-            <InputPaymentDetails title="Down Payment" :payment="downPayment" v-model:isIncluded="downPaymentIncluded" />
+            <InputPaymentDetails :title="$t('message.down_payment')" :payment="downPayment" v-model:isIncluded="downPaymentIncluded" />
         </div>
 
         <!-- Last Payment Section -->
         <div class="mb-6">
-            <InputPaymentDetails title="Last Payment" :payment="lastPayment" v-model:isIncluded="lastPaymentIncluded" />
+            <InputPaymentDetails :title="$t('message.last_payment')" :payment="lastPayment" v-model:isIncluded="lastPaymentIncluded" />
         </div>
 
         <!-- Submit Button -->
         <button @click="submitContract" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg mt-3 w-full">
-            Submit Contract
+            {{ $t('message.submit_contract') }}
         </button>
     </div>
 </template>
@@ -78,6 +95,7 @@ const selectedBuilding = ref(null);
 const selectedApartment = ref(null);
 const selectedCustomer = ref(null);
 const contractDate = ref(new Date().toISOString().slice(0, 10)); // Default to today's date
+const paymentRecordContractDate = ref(new Date().toISOString().slice(0, 10)); // Default to today's date
 const pricePerSquare = ref('');
 const paymentMonths = ref(1);
 
@@ -119,7 +137,11 @@ const fetchApartments = async () => {
 };
 
 const fetchCustomers = async () => {
-    const response = await apiClient.get('/users/customer/all/');
+    const response = await apiClient.get('/users/customer/all/', {
+        params: {
+            search: customerSearch.value,
+        },
+    });
     customers.value = response.data;
 };
 
@@ -129,6 +151,7 @@ const submitContract = async () => {
         apartment: selectedApartment.value,
         customer: selectedCustomer.value,
         contract_date: contractDate.value,
+        payment_record_contract_date: paymentRecordContractDate.value,
         price_per_square: pricePerSquare.value,
         payment_months: paymentMonths.value,
     };

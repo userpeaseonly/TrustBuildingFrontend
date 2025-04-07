@@ -7,7 +7,7 @@
         <div class="container mx-auto mt-10 p-6 bg-white shadow-md rounded-lg w-full max-w-5xl flex">
             <!-- Customer Search and List -->
             <div class="w-1/2 pr-6">
-                <h2 class="text-3xl font-bold mb-6">Payments</h2>
+                <h2 class="text-3xl font-bold mb-6">{{ $t('message.payments') }}</h2>
 
                 <!-- Search Input -->
                 <div class="mb-6">
@@ -16,7 +16,7 @@
                         v-model="searchQuery"
                         @input="fetchCustomers"
                         class="w-full border border-gray-300 rounded-lg p-3 text-sm"
-                        placeholder="Search customers... (Name, Passport)"
+                        :placeholder="$t('message.search_customers_placeholder')"
                     />
                 </div>
 
@@ -33,17 +33,19 @@
                         @selectCustomer="fetchContracts"
                     />
                 </div>
-                
+
                 <!-- No customers found -->
                 <div v-else class="text-center py-6 bg-yellow-100 text-yellow-800 rounded-lg mb-6">
-                    No customers found. Please refine your search.
+                    {{ $t('message.no_customers_found') }}
                 </div>
             </div>
 
             <!-- Contract List Section -->
             <div class="w-1/2 pl-6">
                 <div v-if="selectedCustomer && contracts.length > 0" class="contract-list">
-                    <h3 class="text-2xl font-semibold mb-6 text-gray-800 text-center">Contracts for {{ selectedCustomer.first_name }} {{ selectedCustomer.last_name }}</h3>
+                    <h3 class="text-2xl font-semibold mb-6 text-gray-800 text-center">
+                        {{ $t('message.contracts_for') }} {{ selectedCustomer.first_name }} {{ selectedCustomer.last_name }}
+                    </h3>
                     <div class="flex flex-wrap gap-4">
                         <ContractCard
                             v-for="contract in contracts"

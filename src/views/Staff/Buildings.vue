@@ -5,12 +5,12 @@
 
         <!-- Main content area -->
         <div class="content-container flex-1 p-8 bg-gray-50">
-            <h2 class="text-2xl font-semibold text-center text-indigo-700 mb-6">Manage Buildings</h2>
+            <h2 class="text-2xl font-semibold text-center text-indigo-700 mb-6">{{ $t('message.staff.buildings') }}</h2>
 
             <!-- Button to open create building form -->
             <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded mb-6"
                 @click="openCreateBuildingModal">
-                Create New Building
+                {{ $t('message.create_new_building') }}
             </button>
 
             <!-- Loading Spinner -->

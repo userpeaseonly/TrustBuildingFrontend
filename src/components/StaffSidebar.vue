@@ -4,11 +4,13 @@
       <svg class="w-10 h-8 text-indigo-600 mr-3">
         <use xlink:href="#logo-icon"></use>
       </svg>
-      <span class="text-2xl font-semibold">Staff Sidebar</span>
+      <span class="text-2xl font-semibold">{{ $t('message.staff_sidebar') }}</span>
+
     </a>
     <hr class="border-gray-300 mb-4" />
-    
+
     <nav>
+      
       <ul class="space-y-2">
         <li>
           <RouterLink
@@ -19,7 +21,7 @@
             <svg class="w-5 h-5 mr-3 text-current">
               <use xlink:href="#home-icon"></use>
             </svg>
-            Staff Dashboard
+            {{ $t('message.dashboard') }}
           </RouterLink>
         </li>
         <li>
@@ -31,7 +33,7 @@
             <svg class="w-5 h-5 mr-3 text-current">
               <use xlink:href="#buildings-icon"></use>
             </svg>
-            Manage Buildings
+            {{ $t('message.staff.buildings') }}
           </RouterLink>
         </li>
         <li>
@@ -43,7 +45,7 @@
             <svg class="w-5 h-5 mr-3 text-current">
               <use xlink:href="#customers-icon"></use>
             </svg>
-            Manage Customers
+            {{ $t('message.staff.customers') }}
           </RouterLink>
         </li>
         <li>
@@ -55,7 +57,7 @@
             <svg class="w-5 h-5 mr-3 text-current">
               <use xlink:href="#contracts-icon"></use>
             </svg>
-            Manage Contracts
+            {{ $t('message.staff.contracts') }}
           </RouterLink>
         </li>
         <li>
@@ -67,7 +69,7 @@
             <svg class="w-5 h-5 mr-3 text-current">
               <use xlink:href="#terminated-contracts-icon"></use>
             </svg>
-            Manage Terminated Contracts
+            {{ $t('message.staff.terminated_contracts') }}
           </RouterLink>
         </li>
         <li>
@@ -79,14 +81,24 @@
             <svg class="w-5 h-5 mr-3 text-current">
               <use xlink:href="#payments-icon"></use>
             </svg>
-            Manage Payments
+            {{ $t('message.staff.payments') }}
           </RouterLink>
         </li>
+        
       </ul>
     </nav>
     
+    
     <hr class="border-gray-300 my-4" />
     
+    
+    <!-- Language Selection Dropdown -->
+    <select v-model="selectedLanguage" @change="changeLanguage" class="mt-4 p-2 border rounded">
+      <option value="uz">🇺🇿 Uzbek</option>
+      <option value="en">🇬🇧 English</option>
+      <option value="ru">🇷🇺 Russian</option>
+    </select>
+
     <div class="mt-auto">
       <div class="flex items-center cursor-pointer text-gray-700 hover:text-indigo-600" @click="toggleDropdown">
         <img
@@ -101,12 +113,12 @@
       </div>
       
       <ul v-if="dropdownOpen" class="mt-2 bg-white border border-gray-200 rounded-md shadow-lg text-sm text-gray-700">
-        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a></li>
-        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Profile</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">{{ $t('message.settings') }}</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">{{ $t('message.profile') }}</a></li>
         <li><hr class="border-gray-200" /></li>
         <li>
           <button @click="logout" class="w-full text-left px-4 py-2 hover:bg-gray-100">
-            Logout
+            {{ $t('message.logout') }}
           </button>
         </li>
       </ul>
@@ -117,6 +129,11 @@
 <script setup>
 import { useStore } from 'vuex';
 import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+
+const { locale } = useI18n();
+const selectedLanguage = ref(locale.value);
 
 const store = useStore();
 const username = computed(() => store.getters['auth/user']?.username || 'Staff User');
@@ -129,6 +146,12 @@ const toggleDropdown = () => {
 const logout = () => {
   store.dispatch('auth/logout');
   window.location.reload();
+};
+
+
+const changeLanguage = () => {
+  locale.value = selectedLanguage.value; // Update the language
+  localStorage.setItem('user-language', selectedLanguage.value); // Save preference
 };
 </script>
 

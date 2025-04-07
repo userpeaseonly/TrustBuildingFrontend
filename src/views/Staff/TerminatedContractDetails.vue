@@ -5,11 +5,11 @@
 
         <!-- Main Content Area -->
         <div class="container mx-auto mt-5 px-4 lg:px-8 flex-1">
-            <h2 class="text-3xl font-bold mb-8 text-center">Contract Details</h2>
+            <h2 class="text-3xl font-bold mb-8 text-center">{{ $t('message.contract_details') }}</h2>
 
             <!-- Back button -->
             <button class="bg-gray-500 text-white px-4 py-2 mb-8 rounded hover:bg-gray-600" @click="goBack">
-                Back to Contracts
+                {{ $t('message.back_to_contracts') }}
             </button>
 
             <!-- Loading State -->
@@ -31,17 +31,17 @@
                 <DownPayment v-if="contract.downpayment" :payment="contract.contract.downpayment" />
 
                 <!-- Payments of Termination Amount -->
-                <h4 class="text-2xl font-semibold mb-6 text-gray-800">Payments of Termination Amount</h4>
+                <h4 class="text-2xl font-semibold mb-6 text-gray-800">{{ $t('message.payments_of_termination_amount') }}</h4>
                 <table class="w-full bg-white border-collapse shadow-lg rounded-lg overflow-hidden mb-6">
                     <thead class="bg-blue-600 text-white">
                         <tr>
-                            <th class="px-6 py-3 text-left">Order</th>
-                            <th class="px-6 py-3 text-left">Date</th>
-                            <th class="px-6 py-3 text-left">Planned Payment</th>
-                            <th class="px-6 py-3 text-left">Paid Amount</th>
-                            <th class="px-6 py-3 text-left">Customer Debt</th>
-                            <th class="px-6 py-3 text-left">Make / Type</th>
-                            <th class="px-6 py-3 text-left">Save / Ref</th>
+                            <th class="px-6 py-3 text-left">{{ $t('message.order') }}</th>
+                            <th class="px-6 py-3 text-left">{{ $t('message.date') }}</th>
+                            <th class="px-6 py-3 text-left">{{ $t('message.planned_payment') }}</th>
+                            <th class="px-6 py-3 text-left">{{ $t('message.paid_amount') }}</th>
+                            <th class="px-6 py-3 text-left">{{ $t('message.customer_debt') }}</th>
+                            <th class="px-6 py-3 text-left">{{ $t('message.make_type') }}</th>
+                            <th class="px-6 py-3 text-left">{{ $t('message.save_ref') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,20 +59,20 @@
 
                 <!-- Make Payment Button -->
                 <button @click="openMakePaymentModal" class="bg-yellow-500 text-white px-4 py-2 mb-8 rounded hover:bg-yellow-600">
-                    Make Payment for Terminated Contract
+                    {{ $t('message.make_payment_for_terminated_contract') }}
                 </button>
 
                 <!-- Payment Modal -->
                 <div v-if="showPaymentModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
                     <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
                         <div class="flex justify-between items-center mb-4">
-                            <h5 class="text-lg font-semibold">Make Payment for Terminated Contract</h5>
+                            <h5 class="text-lg font-semibold">{{ $t('message.make_payment_for_terminated_contract') }}</h5>
                             <button class="text-gray-600 hover:text-gray-800" @click="closePaymentModal">&times;</button>
                         </div>
                         <div>
                             <form @submit.prevent="submitPayment">
                                 <div class="mb-4">
-                                    <label class="block text-sm font-medium mb-2">Payment Amount</label>
+                                    <label class="block text-sm font-medium mb-2">{{ $t('message.payment_amount') }}</label>
                                     <input v-model="paymentData.payment_amount" type="number" class="w-full border-gray-300 rounded px-4 py-2" required />
                                     <div v-if="backendErrors?.payment_amount" class="text-red-500 text-sm mt-1">
                                         {{ backendErrors.payment_amount[0] }}
@@ -80,13 +80,13 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <label class="block text-sm font-medium mb-2">Payment Method</label>
+                                    <label class="block text-sm font-medium mb-2">{{ $t('message.payment_method') }}</label>
                                     <select v-model="paymentData.payment_method" class="w-full border-gray-300 rounded px-4 py-2" required>
-                                        <option value="CASH">Cash</option>
-                                        <option value="BANK_TRANSFER">Bank Transfer</option>
-                                        <option value="TERMINAL">Terminal</option>
-                                        <option value="MATERIAL">Material</option>
-                                        <option value="OTHER">Other</option>
+                                        <option value="CASH">{{ $t('message.cash') }}</option>
+                                        <option value="BANK_TRANSFER">{{ $t('message.bank_transfer') }}</option>
+                                        <option value="TERMINAL">{{ $t('message.terminal') }}</option>
+                                        <option value="MATERIAL">{{ $t('message.material') }}</option>
+                                        <option value="OTHER">{{ $t('message.other') }}</option>
                                     </select>
                                     <div v-if="backendErrors?.payment_method" class="text-red-500 text-sm mt-1">
                                         {{ backendErrors.payment_method[0] }}
@@ -94,7 +94,7 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <label class="block text-sm font-medium mb-2">Payment Reference</label>
+                                    <label class="block text-sm font-medium mb-2">{{ $t('message.payment_reference') }}</label>
                                     <input v-model="paymentData.payment_reference" type="text" class="w-full border-gray-300 rounded px-4 py-2" />
                                     <div v-if="backendErrors?.payment_reference" class="text-red-500 text-sm mt-1">
                                         {{ backendErrors.payment_reference[0] }}
@@ -102,7 +102,7 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <label class="block text-sm font-medium mb-2">Payment Notes</label>
+                                    <label class="block text-sm font-medium mb-2">{{ $t('message.payment_notes') }}</label>
                                     <textarea v-model="paymentData.payment_notes" class="w-full border-gray-300 rounded px-4 py-2"></textarea>
                                     <div v-if="backendErrors?.payment_notes" class="text-red-500 text-sm mt-1">
                                         {{ backendErrors.payment_notes[0] }}
@@ -118,8 +118,12 @@
                                 </div>
 
                                 <div class="flex justify-end">
-                                    <button type="button" class="bg-gray-400 text-white px-4 py-2 mr-3 rounded hover:bg-gray-500" @click="closePaymentModal">Cancel</button>
-                                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Submit Payment</button>
+                                    <button type="button" class="bg-gray-400 text-white px-4 py-2 mr-3 rounded hover:bg-gray-500" @click="closePaymentModal">
+                                        {{ $t('message.cancel') }}
+                                    </button>
+                                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                                        {{ $t('message.submit_payment') }}
+                                    </button>
                                 </div>
                             </form>
                         </div>

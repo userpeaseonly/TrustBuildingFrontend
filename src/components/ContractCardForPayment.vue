@@ -1,17 +1,17 @@
 <template>
     <div class="card h-100 shadow-sm">
         <div class="card-body">
-            <h5 class="card-title">Contract #{{ contract.id }}</h5>
+            <h5 class="card-title">{{ $t('message.contract_number', { id: contract.id }) }}</h5>
 
             <div class="mb-3">
-                <strong>Apartment:</strong>
+                <strong>{{ $t('message.apartment') }}:</strong>
                 <p class="card-text">
-                    Apartment {{ contract.apartment.apartment_number }}, Floor {{ contract.apartment.floor_number }}
+                    {{ $t('message.apartment_number', { number: contract.apartment.apartment_number }) }}, {{ $t('message.floor_number', { number: contract.apartment.floor_number }) }}
                 </p>
             </div>
 
             <div class="mb-3">
-                <strong>Customer:</strong>
+                <strong>{{ $t('message.customer') }}:</strong>
                 <p class="card-text">
                     {{ contract.customer.first_name }} {{ contract.customer.last_name }}<br />
                     <i class="bi bi-telephone"></i> {{ contract.customer.user.phone_number }}
@@ -19,50 +19,50 @@
             </div>
 
             <div class="mb-3">
-                <strong>Contract Date:</strong>
+                <strong>{{ $t('message.contract_date') }}:</strong>
                 <p class="card-text">{{ contract.contract_date }}</p>
             </div>
 
             <div class="mb-3">
-                <strong>Price per Square Meter:</strong>
+                <strong>{{ $t('message.price_per_square_meter') }}:</strong>
                 <p class="card-text">{{ formatPrice(contract.price_per_square) }} UZS</p>
             </div>
 
             <div class="mb-3">
-                <strong>Payment Months:</strong>
-                <p class="card-text">{{ contract.payment_months }} months</p>
+                <strong>{{ $t('message.payment_months') }}:</strong>
+                <p class="card-text">{{ contract.payment_months }} {{ $t('message.months') }}</p>
             </div>
 
             <!-- Down Payment Section -->
             <div v-if="contract.down_payment" class="mb-3">
-                <strong>Down Payment:</strong>
+                <strong>{{ $t('message.down_payment') }}:</strong>
                 <p class="card-text">
-                    {{ formatPrice(contract.down_payment.payment_amount) }} UZS (Paid: {{
-                        contract.down_payment.payment_paid ? 'Yes' : 'No' }})<br />
-                    Method: {{ contract.down_payment.payment_method }}<br />
-                    Date: {{ contract.down_payment.payment_date }}<br />
-                    Reference: {{ contract.down_payment.payment_reference }}
+                    {{ formatPrice(contract.down_payment.payment_amount) }} UZS ({{ $t('message.paid') }}: {{
+                        contract.down_payment.payment_paid ? $t('message.yes') : $t('message.no') }})<br />
+                    {{ $t('message.method') }}: {{ contract.down_payment.payment_method }}<br />
+                    {{ $t('message.date') }}: {{ contract.down_payment.payment_date }}<br />
+                    {{ $t('message.reference') }}: {{ contract.down_payment.payment_reference }}
                 </p>
             </div>
 
             <!-- Last Payment Section -->
             <div v-if="contract.last_payment" class="mb-3">
-                <strong>Last Payment:</strong>
+                <strong>{{ $t('message.last_payment') }}:</strong>
                 <p class="card-text">
-                    {{ formatPrice(contract.last_payment.payment_amount) }} UZS (Paid: {{
-                        contract.last_payment.payment_paid ? 'Yes' : 'No' }})<br />
-                    Method: {{ contract.last_payment.payment_method }}<br />
-                    Date: {{ contract.last_payment.payment_date }}<br />
-                    Reference: {{ contract.last_payment.payment_reference }}
+                    {{ formatPrice(contract.last_payment.payment_amount) }} UZS ({{ $t('message.paid') }}: {{
+                        contract.last_payment.payment_paid ? $t('message.yes') : $t('message.no') }})<br />
+                    {{ $t('message.method') }}: {{ contract.last_payment.payment_method }}<br />
+                    {{ $t('message.date') }}: {{ contract.last_payment.payment_date }}<br />
+                    {{ $t('message.reference') }}: {{ contract.last_payment.payment_reference }}
                 </p>
             </div>
 
             <!-- Button to go to contract details -->
             <RouterLink :to="`/${userRole}/contracts/${contract.id}`" class="btn btn-warning mt-3">
-                View Details
+                {{ $t('message.view_details') }}
             </RouterLink>&nbsp;
 
-            <button @click="makePayment" class="btn btn-success mt-3">Make Payment</button>
+            <button @click="makePayment" class="btn btn-success mt-3">{{ $t('message.make_payment') }}</button>
         </div>
     </div>
 </template>

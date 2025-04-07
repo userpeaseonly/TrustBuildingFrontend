@@ -9,6 +9,8 @@
             type="tel"
             id="phone"
             v-model="phoneNumber"
+            placeholder="Enter your phone number"
+            autocomplete="tel"
             class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             :disabled="loading"
             required
@@ -21,6 +23,7 @@
             id="otp"
             v-model="otp"
             maxlength="6"
+            autocomplete="one-time-code"
             class="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             :disabled="loading"
             required

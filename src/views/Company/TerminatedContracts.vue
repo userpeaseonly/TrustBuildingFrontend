@@ -1,33 +1,33 @@
 <template>
-    <div class="flex">
+  <div class="flex">
       <!-- Sidebar -->
       <CompanySidebar />
-  
+
       <!-- Main Content Area -->
       <div class="flex-1 p-8 min-h-screen bg-gray-100">
-        <h2 class="text-3xl font-semibold text-center mb-8">Manage Terminated Contracts</h2>
-  
-        <!-- Loading Spinner -->
-        <div v-if="loadingContracts" class="flex justify-center items-center my-20">
-          <div class="w-12 h-12 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin" role="status">
-            <span class="sr-only">Loading...</span>
+          <h2 class="text-3xl font-semibold text-center mb-8">{{ $t('message.manage_terminated_contracts') }}</h2>
+
+          <!-- Loading Spinner -->
+          <div v-if="loadingContracts" class="flex justify-center items-center my-20">
+              <div class="w-12 h-12 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin" role="status">
+                  <span class="sr-only">{{ $t('message.loading') }}</span>
+              </div>
           </div>
-        </div>
-  
-        <!-- Error Message -->
-        <div v-else-if="errorContracts" class="bg-red-500 text-white text-center py-4 rounded mb-6">
-          {{ errorContracts }}
-        </div>
-  
-        <!-- Terminated Contracts List -->
-        <div v-else>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <TerminateContractCard v-for="contract in contracts" :key="contract.id" :contract="contract" />
+
+          <!-- Error Message -->
+          <div v-else-if="errorContracts" class="bg-red-500 text-white text-center py-4 rounded mb-6">
+              {{ errorContracts }}
           </div>
-        </div>
+
+          <!-- Terminated Contracts List -->
+          <div v-else>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <TerminateContractCard v-for="contract in contracts" :key="contract.id" :contract="contract" />
+              </div>
+          </div>
       </div>
-    </div>
-  </template>
+  </div>
+</template>
   
   <script setup>
   import { ref, onMounted } from 'vue';
